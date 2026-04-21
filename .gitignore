@@ -1,0 +1,19 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Backup / temp files
+*.backup
+*.bak
+*.tmp
+
+# OS
+Thumbs.db
