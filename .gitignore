@@ -17,3 +17,7 @@
 
 # OS
 Thumbs.db
+# Operations-side automation tools (institutional separation; see operations_workflow_v2.md Section 6)
+ENGINE_md_tier_patch.md
+integrate_engine_patch.py
+*.backup-*
