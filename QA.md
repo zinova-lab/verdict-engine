@@ -124,6 +124,60 @@ Result:    [CLEARED / REVISION n/2 / UNRESOLVED — HUMAN REVIEW]
 
 Then deliver the final report (English markdown + Japanese summary).
 
+## Operations Override Rules
+
+The Operations layer (Operations Project, separate from Strategy Project) holds the
+authority and responsibility to override specific engine-output fields when they
+conflict with institutional conventions or when post-engine evidence requires
+correction. Override application must be documented in the deployed artifact's
+header note and logged in worklog.
+
+### Tier Letter Override
+
+**Rule.** If the engine-assigned Tier letter does not match the score band per
+ENGINE.md Tier Threshold Table, the Operations layer must override the engine
+output to apply the rankings convention.
+
+**Verification procedure.**
+1. Operations confirms the Layer 0 total score `N` from the engine output Scorecard.
+2. Operations applies the assignment rule from ENGINE.md to derive `Tier_expected`.
+3. Operations compares `Tier_expected` against the engine-output `Tier_actual`.
+4. If `Tier_expected != Tier_actual`, Operations applies the override:
+   - The deployed evaluation artifact (in `verdict-platforms/evaluations/`) prefixes
+     a header note documenting the override.
+   - The deployed canonical platform `.md` (in `verdict-platforms/platforms/`) reflects
+     the post-override Tier letter directly.
+   - The deployed individual platform page HTML (in `verdict-index/<slug>/`) reflects
+     the post-override Tier letter (typically embedded in score-meta and used for rank
+     section assignment in `rankings/index.html`).
+   - The worklog entry for the deploy operation records the override with the
+     pattern: `Tier override <slug> engine=<X> → Operations=<Y>`.
+
+**Precedent.** First codified application: 2026-04-29 batch deploy.
+- #059 E2B: engine=C → Operations=B (score 46, 45-54 band → B).
+- #061 Mistral La Plateforme: engine=B → Operations=A (score 55, 55-64 band → A).
+
+### Other Override Categories (reference)
+
+The following categories are reserved for Operations override as institutional
+process matures. Each requires its own documented rule before application:
+
+- **Score line correction** (only for clerical errors confirmed against
+  Internal Consistency Check item 1; substantive score changes require
+  re-evaluation, not override).
+- **Category line normalization** (operator naming changes, acquisition reflection).
+- **Special Considerations addition** (post-evaluation material disclosures).
+
+### Audit Trail Requirement
+
+Every override must produce three institutional records:
+1. Header note in the deployed evaluation artifact (operations-visible).
+2. Reflection in the canonical platform `.md` and HTML (production-visible).
+3. Worklog entry citing the override category and pre/post values (institutional log).
+
+Without these three records, the override is institutionally undocumented and may be
+unintentionally repeated or skipped on a subsequent re-deploy or batch operation.
+
 ## Escalation
 
 If during the review you discover an issue you cannot resolve with available information:

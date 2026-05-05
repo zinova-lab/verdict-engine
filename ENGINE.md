@@ -55,6 +55,58 @@ Per dimension, based on percentage of maximum points:
 
 Examples: V (max 20) — 14+ High, 8–13 Mid, 0–7 Low. T (max 10) — 7+ High, 4–6 Mid, 0–3 Low.
 
+## Tier Letter Assignment
+
+The engine assigns a single-letter Tier classification (S/A/B/C/D) to each evaluated
+platform based on the Layer 0 total score. The thresholds are sourced from the
+canonical rankings convention published at `https://getverdict.fyi/rankings/` and
+codified here for engine-output conformity.
+
+### Tier Threshold Table
+
+| Tier | Score Range | Tier Name | Description |
+|------|-------------|-----------|-------------|
+| S | 65–85 | Institutional Grade | Suitable for institutional deployments with strong public security and compliance posture across multiple frameworks. |
+| A | 55–64 | Enterprise Ready | Documented enterprise-grade controls; some material gaps recorded. |
+| B | 45–54 | Developing | Foundational controls in place; multiple material gaps in containment, transparency, or compliance. |
+| C | 35–44 | Foundational | Limited public security or compliance posture; suitable for non-regulated workloads with explicit risk acceptance. |
+| D | 21–34 | Early / At Risk | Minimal public security posture; structural gaps across multiple dimensions. |
+
+### Assignment Rule
+
+For a platform with Layer 0 total score `N`:
+
+```
+if N >= 65:  Tier = "S"
+elif N >= 55: Tier = "A"
+elif N >= 45: Tier = "B"
+elif N >= 35: Tier = "C"
+else:         Tier = "D"
+```
+
+### Edge Cases
+
+- Score boundary values (e.g. 55, 65) belong to the higher tier (A and S respectively).
+- Scores below 21 are not expected within the current evaluation framework but, if
+  encountered, should be flagged for re-evaluation rather than assigned a tier.
+- The Layer 0 maximum is 85 (E-dimension is Layer 1+ and excluded from Layer 0 score).
+
+### Mandatory Output Format
+
+The engine output must include the following lines in the Scorecard or VERDICT
+Record section:
+
+```
+Tier: <S|A|B|C|D>
+Category: <platform category line>
+```
+
+The Tier letter must be derived from the assignment rule above; it must not be
+derived from any internal heuristic, rounding rule, or comparative-judgment
+mechanism. If the engine internally computes a different Tier, the rankings
+convention takes precedence and the engine output must reflect the rankings-derived
+Tier.
+
 ## Scoring Dimensions
 
 Layer 0 total: 85 points (V + R + D + I + C + T). E is Layer 1+ only.
