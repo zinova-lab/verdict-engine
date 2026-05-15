@@ -91,6 +91,66 @@ else:         Tier = "D"
   encountered, should be flagged for re-evaluation rather than assigned a tier.
 - The Layer 0 maximum is 85 (E-dimension is Layer 1+ and excluded from Layer 0 score).
 
+
+## Framework v1.1 — Anthropic Equity-Holder Disclosure Layer
+
+### Structural context note (effective 2025-11-18)
+
+On 2025-11-18, NVIDIA and Microsoft announced strategic equity commitments in Anthropic (up to USD 10 billion and USD 5 billion respectively, subject to closing conditions), joining Amazon and Google as material equity-holders. This expands the set of entities whose corporate relationships may require explicit disclosure under framework v1.1. Evaluations completed under framework v1.0 (#060–#065, deployed prior to v1.1 adoption) are not retroactively modified; their disclosure footprint reflects the framework in force at evaluation time.
+
+### Materiality framework
+
+A VERDICT evaluation triggers **Anthropic-investor disclosure** when one or more of the following structural conditions obtains:
+
+**Trigger 1 — Parent identity**: The evaluated platform is operated by an entity that holds a material equity position in Anthropic.
+- Example: a toolkit operated by NVIDIA. NVIDIA holds equity commitment in Anthropic. Trigger 1 fires.
+
+**Trigger 2 — Compound cap-table**: A material Anthropic equity-holder is itself a material investor in the evaluated platform.
+- Example: a model-provider with NVIDIA on its cap-table. NVIDIA also holds equity in Anthropic. Trigger 2 fires.
+
+**Trigger 3 — Non-arms-length channel**: The evaluated platform's commercial structure includes a non-arms-length relationship with a material Anthropic equity-holder beyond standard supplier-customer relations (exclusive distribution, joint venture, white-label OEM, co-marketing with revenue share, etc.).
+- Example hypothetical: a platform sold exclusively through Amazon Marketplace with revenue share. Trigger 3 fires for Amazon.
+
+### Non-triggers (illustrative)
+
+The following relationships are explicitly **not** disclosure triggers under framework v1.1:
+
+- Platform runs inference on NVIDIA GPUs (supplier relationship is industry-standard)
+- Platform offered on AWS, Azure, or GCP marketplace (distribution channel is industry-standard)
+- Platform uses Claude API as one of many LLM provider options (model-provider relationship is the entire premise of VERDICT and not itself a conflict; product-integration disclosure covers this separately)
+
+### Definition: material Anthropic equity-holder
+
+For framework v1.1 purposes, **material Anthropic equity-holders** = {Amazon, Google, Microsoft, NVIDIA}.
+
+Inclusion criterion: publicly-disclosed equity commitment of USD 1 billion or greater (whether closed or subject to closing conditions). Future additions to this set require Strategy ratification before incorporation into evaluations.
+
+### Definition: material investor in the evaluated platform
+
+For Trigger 2 purposes, a material investor in the evaluated platform is one that satisfies any of:
+- Publicly-disclosed equity position of USD 100 million or greater, OR
+- Membership on the board of directors, OR
+- Designation as "lead investor" or "strategic investor" in publicly-reported funding rounds.
+
+The asymmetric threshold (USD 1 billion on the Anthropic side, USD 100 million on the evaluated-platform side) reflects that small AI startups raising USD 100 million rounds treat that level as strategic, while Anthropic's scale means sub-billion stakes are unlikely to convey strategic significance.
+
+### Disclosure structure
+
+When any trigger fires, the evaluation prompt's Special Considerations section includes explicit disclosure of the triggered structure. The disclosure separates corporate-level commercial and equity relationships (Trigger 1, 2, or 3) from product-level integration choices (e.g., Claude as one of N LLM provider options), in distinct paragraphs.
+
+The disclosure does not change scoring methodology. VERDICT scoring remains based exclusively on public data sources per the v0.3.1 framework, and no vendor revenue or paid certification influences the rating. The disclosure exists to inform readers of structural relationships that may affect their interpretation of the evaluation.
+
+### Forward-only application
+
+Framework v1.1 applies to evaluations numbered #066 and forward. Evaluations #060–#065 remain valid under framework v1.0 as published, consistent with the principle that framework precision evolves and prior valid work is not retroactively rewritten.
+
+### Future framework evolution
+
+The following structural cases are flagged for potential framework v1.2 consideration if they arise during subsequent evaluation batches:
+
+- Inverse-direction conflict: a material Anthropic equity-holder is a **competitor** of the evaluated platform (e.g., evaluating a platform that competes directly with a Microsoft-operated service while Microsoft holds equity in Anthropic).
+- Additional material Anthropic equity-holders beyond the current set of {Amazon, Google, Microsoft, NVIDIA}, requiring Strategy ratification before incorporation.
+
 ### Mandatory Output Format
 
 The engine output must include the following lines in the Scorecard or VERDICT
