@@ -37,13 +37,14 @@ HELPERS_DIR="${SCRIPT_DIR}/helpers"
 # ============================================================================
 
 for module in utils preflight status file_creation commit_push verify; do
-  module_path="${LIB_DIR}/${module}.sh"
-  if [[ ! -f "$module_path" ]]; then
-    printf '[ERROR] Module not found: %s\n' "$module_path" >&2
+  _verdict_module_path="${LIB_DIR}/${module}.sh"
+  if [[ ! -f "$_verdict_module_path" ]]; then
+    printf '[ERROR] Module not found: %s\n' "$_verdict_module_path" >&2
     exit 1
   fi
-  source "$module_path"
+  source "$_verdict_module_path"
 done
+unset _verdict_module_path
 
 # ============================================================================
 # Constants
