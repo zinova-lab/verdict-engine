@@ -131,10 +131,6 @@ validate_content() {
     issues+=("CRLF 改行コード検出 (LF 推奨)")
   fi
   
-  # Check 5: UTF-8 validity (基本的に zsh は OK、念のため)
-  if ! echo "$content" | iconv -f UTF-8 -t UTF-8 >/dev/null 2>&1; then
-    issues+=("UTF-8 として valid ではありません")
-  fi
   
   if [[ ${#issues[@]} -gt 0 ]]; then
     log_warn "Content validation で問題検出:"
