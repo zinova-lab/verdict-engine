@@ -320,20 +320,86 @@ file_single_evaluation() {
       ;;
   esac
   
-  # ----- Step 1.3: Content 取得 (clipboard 経由) -----
-  log_info "Notion から評価コンテンツを clipboard にコピーしてください"
-  log_info "  (Notion: ... メニュー → 'Copy as Markdown' 推奨)"
-  echo ""
+  # ----- Step 1.3: Content 取得 (editor 経由、institutional 複数 source 対応) -----
+  local temp_file="/tmp/verdict_eval_${nnn}_${slug}.md"
   
-  read -r "?コピー完了したら Enter を押してください: " _
+  # institutional 既存 temp file 確認 (前回中断からの復元)
+  if [[ -f "$temp_file" ]]; then
+    log_warn "前回の temp file が institutional に残存: $temp_file"
+    if prompt_confirm "既存内容を使用しますか? (n で破棄して新規作成)" "y"; then
+      log_info "既存 temp file の内容を使用します"
+    else
+      rm -f "$temp_file"
+    fi
+  fi
   
-  local content
-  content=$(get_clipboard_content)
+  # institutional 新規 temp file 作成 (空 file または header のみ)
+  if [[ ! -f "$temp_file" ]]; then
+    cat > "$temp_file" << TEMPLATE_EOF
+# 評価 #${nnn} ${slug}
+
+<!-- 
+institutional 編集手順:
+  1. Notion で英語評価を select → Cmd+C
+  2. ここに貼付 (Cmd+V)
+  3. Notion で日本語評価を select → Cmd+C
+  4. 続けて貼付 (Cmd+V)
+  5. 必要に応じて institutional に編集
+  6. 保存 + 終了:
+     - nano: Ctrl+O → Enter → Ctrl+X
+     - vim: :wq → Enter
+     - VS Code: Cmd+S → Cmd+W
   
-  if [[ -z "$content" ]]; then
-    log_error "Clipboard が空、または取得失敗"
+このコメントブロックは institutional に削除可能 (任意)。
+-->
+
+TEMPLATE_EOF
+  fi
+  
+  log_info "評価コンテンツを editor で institutional 編集します"
+  log_info "  Temp file: $temp_file"
+  log_info ""
+  log_info "institutional 編集手順:"
+  log_info "  - Notion 英語評価を copy → 貼付"
+  log_info "  - Notion 日本語評価を copy → 貼付 (順序自由)"
+  log_info "  - 保存 + 終了で本 script に戻ります"
+  log_info ""
+  
+  read -r "?Enter で editor を起動: " _
+  
+  # institutional editor 選択: $EDITOR → nano fallback
+  local editor="${EDITOR:-nano}"
+  if ! command -v "$editor" >/dev/null 2>&1; then
+    log_warn "Editor '$editor' が institutional に見つかりません、nano を使用"
+    editor="nano"
+  fi
+  
+  log_info "Editor 起動: $editor"
+  "$editor" "$temp_file"
+  local editor_exit=$?
+  
+  if [[ $editor_exit -ne 0 ]]; then
+    log_warn "Editor が non-zero exit ($editor_exit) で institutional 終了"
+    if ! prompt_confirm "それでも続行しますか?" "n"; then
+      return 1
+    fi
+  fi
+  
+  # institutional file 読み取り
+  if [[ ! -f "$temp_file" ]]; then
+    log_error "Temp file が institutional に消失: $temp_file"
     return 1
   fi
+  
+  local content
+  content=$(cat "$temp_file")
+  
+  if [[ -z "$content" ]]; then
+    log_error "Temp file が空、編集が institutional に行われませんでした"
+    return 1
+  fi
+  
+  # institutional cleanup: temp file は配置成功後に削除 (institutional safety net)
   
   # ----- Content validation -----
   if ! validate_content "$content"; then
@@ -375,6 +441,12 @@ file_single_evaluation() {
     fi
     file_size=$(stat -f%z "$target_path" 2>/dev/null || stat -c%s "$target_path" 2>/dev/null)
     line_count=$(wc -l < "$target_path" | tr -d ' ')
+  fi
+  
+  # institutional cleanup: 成功時のみ temp file 削除
+  if [[ -f "$temp_file" ]] && [[ "${VERDICT_DRY_RUN:-false}" != "true" ]]; then
+    rm -f "$temp_file"
+    log_debug "Temp file cleaned: $temp_file"
   fi
   
   log_success "#$nnn $slug 配置完了"

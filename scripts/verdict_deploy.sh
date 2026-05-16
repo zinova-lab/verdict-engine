@@ -227,14 +227,29 @@ run_main_workflow() {
   # Phase 1
   run_phase_1 || return 1
   
-  # Phase 2
-  run_phase_2 || return 1
-  
-  # Phase 2.5
-  verify_cdn_propagation || {
-    log_warn "CDN verification に問題ありますが、push は完了しています"
-    log_info "数分後に再確認してください"
-  }
+  # Phase 2 + 2.5 (dry-run mode では institutional 全 skip)
+  if [[ "${VERDICT_DRY_RUN:-false}" == "true" ]]; then
+    log_section "Phase 2-2.5: Dry-run skip"
+    log_info "[DRY-RUN] Phase 2 (Stage / Commit / Push / CDN verify) を institutional skip"
+    log_info ""
+    log_info "実 deploy では以下が institutional に実行されます:"
+    log_info "  Phase 2.1  git status --short で untracked file 検証"
+    log_info "  Phase 2.2  Platform metadata 入力 (clipboard or 1 行ずつ)"
+    log_info "  Phase 2.3  git add + git diff --cached --stat review"
+    log_info "  Phase 2.4  git commit + git push origin main"
+    log_info "  Phase 2.5  sleep 30s + curl で CDN verification (retry 3)"
+    log_info ""
+    log_success "Dry-run 完走 — Phase 0 + Phase 1 institutional 動作確認済"
+  else
+    # Phase 2
+    run_phase_2 || return 1
+    
+    # Phase 2.5
+    verify_cdn_propagation || {
+      log_warn "CDN verification に問題ありますが、push は完了しています"
+      log_info "数分後に再確認してください"
+    }
+  fi
   
   # State save
   save_state_json "complete" "${VERDICT_COMMIT_HASH:-unknown}" "${VERDICT_FILED_EVALUATIONS[@]}"
