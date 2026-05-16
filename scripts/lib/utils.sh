@@ -37,8 +37,10 @@ log_error() {
 }
 
 log_debug() {
-  [[ "${VERDICT_DEBUG:-false}" == "true" ]] && \
+  if [[ "${VERDICT_DEBUG:-false}" == "true" ]]; then
     printf '[\033[35mDEBUG\033[0m] %s\n' "$*" >&2
+  fi
+  return 0
 }
 
 log_success() {
@@ -289,7 +291,7 @@ list_state_files() {
 # institutional 簡易 parser (key: value flat structure)
 # ============================================================================
 
-CONFIG_FILE="${VERDICT_CONFIG:-$(dirname "${BASH_SOURCE[0]:-$0}")/../verdict_deploy_config.yaml}"
+CONFIG_FILE="${VERDICT_CONFIG:-${0:A:h}/../verdict_deploy_config.yaml}"
 
 # Returns: stdout に value
 get_config() {
