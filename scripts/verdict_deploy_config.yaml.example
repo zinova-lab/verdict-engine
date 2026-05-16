@@ -1,0 +1,45 @@
+# VERDICT Operations Deploy Script — Configuration
+# 
+# このファイルを `verdict_deploy_config.yaml` にコピーして institutional に編集します。
+# 環境変数 ($VAR_NAME) は institutional に runtime で展開されます。
+
+paths:
+  verdict_home: $HOME/Desktop/VERDICT
+  platforms_repo: $VERDICT_HOME/verdict-platforms
+  engine_repo: $VERDICT_HOME/verdict-engine
+  index_repo: $VERDICT_HOME/verdict-index
+
+git:
+  default_branch: main
+  expected_remote_platforms: https://github.com/ZinovaCreation/verdict-platforms.git
+  expected_remote_engine: https://github.com/zinova-lab/verdict-engine.git
+  identity: zinova-lab
+
+deploy:
+  evaluations_dir: evaluations
+  sleep_before_verify: 30
+  cdn_retry_count: 3
+  cdn_retry_interval: 10
+  lock_file: /tmp/verdict_deploy.lock
+  state_dir: /tmp
+
+slug_convention:
+  case: lower
+  separator: underscore       # Phase β convention
+  legacy_separator: hyphen    # Phase α legacy (read-only check)
+  invalid_chars_strip: true
+
+deploy_status:
+  raw_url: https://raw.githubusercontent.com/zinova-lab/verdict-engine/main/docs/deploy_status.md
+  local_path: $ENGINE_REPO/docs/deploy_status.md
+
+content_validation:
+  min_lines: 30
+  max_lines: 2000
+  require_markdown_heading: true
+  level: warn                 # warn | block
+
+institutional:
+  framework_version: v1.1
+  workflow_version: path_beta
+  schema_version: 1.0
