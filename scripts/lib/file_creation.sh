@@ -367,15 +367,24 @@ TEMPLATE_EOF
   
   read -r "?Enter で editor を起動: " _
   
-  # institutional editor 選択: $EDITOR → nano fallback
-  local editor="${EDITOR:-nano}"
-  if ! command -v "$editor" >/dev/null 2>&1; then
-    log_warn "Editor '$editor' が institutional に見つかりません、nano を使用"
-    editor="nano"
+  # institutional editor 選択: $EDITOR -> code --wait -> vim
+  # nano は institutional に hang する環境があるため除外
+  local editor_cmd=""
+  if [[ -n "${EDITOR:-}" ]] && command -v "${EDITOR%% *}" >/dev/null 2>&1; then
+    editor_cmd="$EDITOR"
+  elif command -v code >/dev/null 2>&1; then
+    editor_cmd="code --wait"
+  elif command -v vim >/dev/null 2>&1; then
+    editor_cmd="vim"
+  else
+    log_error "利用可能な editor が institutional に見つかりません"
+    return 1
   fi
-  
-  log_info "Editor 起動: $editor"
-  "$editor" "$temp_file"
+  log_info "Editor 起動: $editor_cmd"
+  log_info "  (VS Code: 編集後タブを閉じると script に復帰)"
+  log_info "  (vim: 編集後 :wq で保存終了)"
+  echo ""
+  ${=editor_cmd} "$temp_file" < /dev/tty > /dev/tty 2>&1
   local editor_exit=$?
   
   if [[ $editor_exit -ne 0 ]]; then
