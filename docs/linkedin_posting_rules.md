@@ -91,7 +91,7 @@ After publishing:
 
 - QA Protocol: `qa_protocol_v1-1.md`
 - Confirmed decisions: `confirmed_strategic_decisions.md`
-- Framework: `ENGINE.md` (external, at https://github.com/GithubsampleZIC/verdict-engine)
+- Framework: `ENGINE.md` (external, at https://github.com/zinova-lab/verdict-engine)
 
 ---
 

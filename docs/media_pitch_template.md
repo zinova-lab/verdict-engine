@@ -19,7 +19,7 @@ If any rule here appears to conflict with `confirmed_strategic_decisions.md` (Me
 2. **Public data only.** All evidence cited in pitches comes from sources the journalist can independently verify: NVD, CISA KEV, GitHub Security Advisories, official ToS, published vendor documentation. No private briefings, no embargoed vendor statements, no unpublished analysis.
 3. **Proactive bias disclosure.** Every pitch discloses upfront that VERDICT evaluations are generated using Claude (Anthropic tooling), and that Anthropic operates in the AI agent market evaluated by VERDICT. This disclosure appears near the opening, not buried in a footer.
 4. **No exclusivity offers.** Identical pitches may be sent to multiple journalists. Exclusivity offers compromise editorial independence by creating an implicit obligation to the exclusive recipient. If a journalist asks for exclusivity, decline politely and explain the position.
-5. **Citation expectation.** When a journalist cites VERDICT data in published coverage, the expected citation format includes a link to the VERDICT framework documentation (https://github.com/GithubsampleZIC/verdict-engine) in addition to any data-specific URLs. This is stated in the pitch so journalists understand the citation norm before drafting.
+5. **Citation expectation.** When a journalist cites VERDICT data in published coverage, the expected citation format includes a link to the VERDICT framework documentation (https://github.com/zinova-lab/verdict-engine) in addition to any data-specific URLs. This is stated in the pitch so journalists understand the citation norm before drafting.
 6. **No pre-publication coordination.** Pitches never offer to review a journalist's draft before publication. Pitches never request that VERDICT be quoted in a particular way. The journalist retains full editorial control; VERDICT provides source material only.
 
 ---
@@ -144,7 +144,7 @@ About the VERDICT framework:
 
 - Methodology: {{NUMBER}}-point evaluation across seven dimensions (Verifiability, Effectiveness, Resilience, Data Conduct, Identity & Control, Containment, Transparency)
 - Data sources: public only (NVD, CISA KEV, GitHub Security Advisories, official ToS, vendor documentation)
-- Framework documentation: https://github.com/GithubsampleZIC/verdict-engine
+- Framework documentation: https://github.com/zinova-lab/verdict-engine
 - Current dataset: {{NUMBER}} platforms evaluated, updated continuously
 - Independence: zero vendor funding, no paid certifications, no pre-publication vendor sharing
 
@@ -167,8 +167,8 @@ If helpful for your reporting, you can verify the data in this pitch independent
 
 - Evaluation page with full dimension-level detail: {{VERDICT_EVALUATION_URL}}
 - Public sources cited in the evaluation (direct links on the evaluation page)
-- Framework methodology and scoring rubric: https://github.com/GithubsampleZIC/verdict-engine/blob/main/ENGINE.md
-- Known Fact Corrections (factual entries VERDICT has cross-referenced against vendor claims): https://github.com/GithubsampleZIC/verdict-engine/blob/main/KNOWN_FACTS.md
+- Framework methodology and scoring rubric: https://github.com/zinova-lab/verdict-engine/blob/main/ENGINE.md
+- Known Fact Corrections (factual entries VERDICT has cross-referenced against vendor claims): https://github.com/zinova-lab/verdict-engine/blob/main/KNOWN_FACTS.md
 
 VERDICT is happy to answer questions, but the data supports independent reporting without any input from VERDICT.
 ```
@@ -682,7 +682,7 @@ Dear {{JOURNALIST_NAME}},
 
 {{INCIDENT_NAME}} was disclosed on {{INCIDENT_DATE}} ({{INCIDENT_SOURCE_URL}}). VERDICT's pre-incident evaluation data on {{AFFECTED_PLATFORM_COUNT}} affected or adjacent platforms may be useful for your coverage.
 
-A bias disclosure (abbreviated for time-sensitivity, full disclosure at https://github.com/GithubsampleZIC/verdict-engine): VERDICT evaluations are generated using Claude (Anthropic), an active participant in the AI agent market VERDICT evaluates.
+A bias disclosure (abbreviated for time-sensitivity, full disclosure at https://github.com/zinova-lab/verdict-engine): VERDICT evaluations are generated using Claude (Anthropic), an active participant in the AI agent market VERDICT evaluates.
 ```
 
 The incident opening is fixed in structure. The three sentences carry three functions: incident identification with source, VERDICT relevance statement, and compressed bias disclosure.
@@ -718,7 +718,7 @@ Full evaluations (each page contains the complete dimension-level analysis and c
 - {{PLATFORM_2}}: {{EVALUATION_URL_2}}
 - {{PLATFORM_3}}: {{EVALUATION_URL_3}}
 
-Framework documentation (for methodology verification): https://github.com/GithubsampleZIC/verdict-engine
+Framework documentation (for methodology verification): https://github.com/zinova-lab/verdict-engine
 ```
 
 Rules for the incident data body:
@@ -1001,9 +1001,9 @@ After the report summary, include a framework integration reference that clarifi
 Methodological basis:
 
 - Framework version used: VERDICT v0.3.1
-- Framework documentation: https://github.com/GithubsampleZIC/verdict-engine
-- Scoring rubric: https://github.com/GithubsampleZIC/verdict-engine/blob/main/ENGINE.md
-- Known fact corrections applied: https://github.com/GithubsampleZIC/verdict-engine/blob/main/KNOWN_FACTS.md
+- Framework documentation: https://github.com/zinova-lab/verdict-engine
+- Scoring rubric: https://github.com/zinova-lab/verdict-engine/blob/main/ENGINE.md
+- Known fact corrections applied: https://github.com/zinova-lab/verdict-engine/blob/main/KNOWN_FACTS.md
 
 The report applies the published framework without modification. Findings derive from public-source data; no proprietary or vendor-provided data is used in VERDICT research.
 ```
@@ -1247,7 +1247,7 @@ On {{METHODOLOGY_TOPIC}}:
 {{METHODOLOGY_EXPLANATION}}
 
 Relevant framework section: {{ENGINE_MD_SECTION_REFERENCE}}
-Full framework: https://github.com/GithubsampleZIC/verdict-engine
+Full framework: https://github.com/zinova-lab/verdict-engine
 
 Where this shows up in evaluations: {{EXAMPLE_EVALUATION_REFERENCE}}
 ```
@@ -1307,7 +1307,7 @@ Regarding your request for pre-publication access to upcoming evaluations:
 
 VERDICT does not provide pre-publication access to evaluations under any circumstance. This is Core principle 2 (public data only, no pre-publication vendor or media sharing). Published evaluations are available on getverdict.fyi as they become live; all journalists access them simultaneously through public channels.
 
-The framework documentation and historical evaluation dataset remain open for your reference without any time-lag: https://github.com/GithubsampleZIC/verdict-engine
+The framework documentation and historical evaluation dataset remain open for your reference without any time-lag: https://github.com/zinova-lab/verdict-engine
 ```
 
 **Decline: Exclusivity on pitched data**
@@ -1345,7 +1345,7 @@ Close inquiry responses with a compressed structure that invites further engagem
 ```
 If other questions arise as you develop the story, follow-up inquiries are welcome at press@getverdict.fyi.
 
-VERDICT evaluations are generated using Claude (Anthropic), an active participant in the AI agent market VERDICT evaluates. Full disclosure: https://github.com/GithubsampleZIC/verdict-engine
+VERDICT evaluations are generated using Claude (Anthropic), an active participant in the AI agent market VERDICT evaluates. Full disclosure: https://github.com/zinova-lab/verdict-engine
 
 — VERDICT (via press@getverdict.fyi)
 ```
@@ -1530,7 +1530,7 @@ Log entries are English-only, exclude credentials, and do not paraphrase journal
 - Vendor notification: `vendor_notification_template.md` — when a pitch references a specific vendor, vendor engagement rules still apply
 - LinkedIn posting rules: `linkedin_posting_rules.md` — when a pitch accompanies a LinkedIn post, both rule sets apply
 - Discord logging: `discord_logging_rules.md` — `#media-outreach` channel format
-- Framework: `ENGINE.md` (external, at https://github.com/GithubsampleZIC/verdict-engine) — methodology basis for all published evaluations
+- Framework: `ENGINE.md` (external, at https://github.com/zinova-lab/verdict-engine) — methodology basis for all published evaluations
 
 ### Channel organization
 

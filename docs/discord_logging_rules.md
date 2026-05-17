@@ -1470,7 +1470,7 @@ The examples are not exhaustive; they are representative. Novel event types or e
 - Vendor notification: `vendor_notification_template.md` — Vendor correspondence events log to `#vendor-responses` per Part 13 integration
 - Media pitch: `media_pitch_template.md` — Media engagement events log to `#media-outreach` per Part 13 integration
 - LinkedIn posting: `linkedin_posting_rules.md` — LinkedIn events log to `#daily-log` with 60-second window verification per Part 14 integration
-- Framework: `ENGINE.md` (external, at https://github.com/GithubsampleZIC/verdict-engine) — engine repo commit events log to `#daily-log`; framework update observations log to `#ideas`
+- Framework: `ENGINE.md` (external, at https://github.com/zinova-lab/verdict-engine) — engine repo commit events log to `#daily-log`; framework update observations log to `#ideas`
 
 ### Channel organization summary
 
