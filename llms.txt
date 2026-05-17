@@ -1,0 +1,32 @@
+# VERDICT Engine
+
+> Framework specification and operations governance for VERDICT, an
+> independent AI agent trust evaluation index. This repo holds the
+> evaluation framework and operations docs; evaluation reports and the
+> dataset live in the verdict-platforms repo.
+
+## Authority order
+
+canonical (this repo, for framework/ops spec) > compiled brief >
+Project Knowledge bootstrap. On divergence, this repo's files win.
+
+## Framework specification (stable core)
+
+- [ENGINE.md](ENGINE.md): the VERDICT evaluation framework (v0.3.1).
+- [QA.md](QA.md): QA protocol and Operations Override Rules.
+- [KNOWN_FACTS.md](KNOWN_FACTS.md): entity facts applied during evaluation.
+
+## Operations governance docs
+
+- [operations_workflow_v2.md](docs/operations_workflow_v2.md): context-volume
+  sustainability design (Option C / D).
+- [operations_session_sop.md](docs/operations_session_sop.md)
+- [operations_sync_automation_proposal.md](docs/operations_sync_automation_proposal.md)
+- [operations_override_log.md](docs/operations_override_log.md): institutional
+  override registry.
+- [deploy_status.md](docs/deploy_status.md): canonical deployed-platform record.
+
+## Notes
+
+- Confidential strategy material is NOT in this repo and is never
+  auto-fetched. It is held outside the public repositories entirely.
