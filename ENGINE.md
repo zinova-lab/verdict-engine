@@ -1,4 +1,4 @@
-# VERDICT Evaluation Engine — Framework v0.3.1
+# VERDICT Evaluation Engine — Framework v0.3.2
 
 VERDICT evaluates AI agent and workflow automation platforms on security, privacy, and compliance using only publicly available sources. This document defines the evaluation framework, scoring criteria, and operational sequence the engine follows.
 
@@ -20,7 +20,7 @@ Violations invalidate the evaluation.
 | 6 | Every factual claim cites a URL. If no source, state "source unconfirmed." |
 | 7 | Category averages require actual multi-platform data. Otherwise use absolute values. |
 | 8 | Bias disclosure is mandatory in every report (verbatim wording defined below). |
-| 9 | Evaluations are bound to a framework version. Version change triggers re-evaluation flag. |
+| 9 | Evaluations are bound to a framework version. A minor-version change (scoring criteria, dimensions, thresholds) flags every existing evaluation for re-evaluation at its next review. A patch-version change (review cadence, trigger definitions, disclosure procedure, output conventions) leaves existing evaluations and their recorded `framework_version` as published. |
 | 10 | Silence is data. Absence of disclosure is scored as zero. |
 
 ## Three-Layer Structure
@@ -29,19 +29,35 @@ Violations invalidate the evaluation.
 |-------|-------------|------|
 | Layer 0 | Public documentation analysis only. Score max 85 (E excluded). | Zero |
 | Layer 1 | Free-tier behavioral testing. 30 runs × 4 difficulty levels across 3+ days. E scorable. Full 100-point scale. | Free tier only |
-| Layer C | Continuous CVE and incident monitoring. Updates R dimension dynamically. | Zero |
+| Layer C | Continuous monitoring: an interrupt lane (trigger-driven) and an annual routine review. Updates a published evaluation through the Differential Evaluation procedure. | Zero |
 
-### Re-evaluation triggers (R dimension)
+### Layer C — Review triggers, routine cadence, and dormancy
 
-Any one of the following triggers a mandatory R-dimension update of an existing evaluation:
+A published evaluation is updated through two lanes. Both produce a Differential Evaluation (see below); neither edits scores in place.
 
-1. A new CVE with CVSS 7.0+ is published for the platform.
-2. The platform is added to the CISA Known Exploited Vulnerabilities catalog.
-3. A supply chain compromise affecting the platform or its direct dependencies is publicly confirmed.
-4. A major security incident is reported by two or more independent sources.
-5. 90 days have elapsed since the last evaluation (routine check).
+**Interrupt lane (trigger-driven).** Any one of the following fires a differential evaluation with the mandatory re-check scope shown. Triggers are detected by Operations sweeps; the sweep procedure is defined in operations documents, not here.
 
-If the re-evaluation changes the total score by ≥3 points, flag the evaluation as requiring a full re-review.
+| # | Trigger | Timing | Mandatory re-check |
+|---|---------|--------|--------------------|
+| T1 | A CVE or GHSA is published that is attributable to the evaluated target (product scope per `target_version`, not the operator's whole portfolio). | CVSS 7.0+, or unscored with public exploitation reports: immediate. Below 7.0: at the next quarterly sweep. | R |
+| T2 | A CVE for the platform is added to the CISA KEV catalog. | Immediate | R + KEV flag protocol |
+| T3 | A supply chain compromise affecting the platform or a direct dependency is publicly confirmed. | Immediate | R, T |
+| T4 | A major security incident is reported by two or more independent sources. | Immediate | R, T |
+| T5 | A change of terms of service, privacy policy, operator, or ownership (acquisition, entity change, rename) is publicly confirmed. | Next quarterly sweep | V, D; `independence` / `parent_entity` re-assessed; `KNOWN_FACTS.md` entry when a published fact has become incorrect |
+| T6 | A minor-version change of this framework (Absolute Rule 9). | Next routine review | All dimensions |
+
+**Routine lane.** Every evaluation is re-reviewed 365 days after its base date (`updated_at` if present, otherwise `evaluated_at`). Routine scope: R, T, V re-evaluated; D, I, C carried forward only under the carry-forward conditions in Differential Evaluation. The 365-day interval is provisional pending ReviewCadence-002; the pipeline constant follows that ratification.
+
+**Score-change rule.** If an R-only re-check moves the total by 3 points or more, the update is escalated to a full re-review (all six dimensions re-evaluated, no carry-forward) before publication.
+
+**Dormancy (frozen state).** When the evaluated target — as bound by `target_version` — shows no public release, commit, or changelog activity for 12 consecutive months, the evaluation enters a frozen state:
+
+- the verdict, score, tier and rank are unchanged;
+- the routine lane does not apply; the interrupt lane remains active (a CVE published against a dormant target is still a T1 event);
+- the record carries `dormant_since` (the last publicly observed activity date, source-cited) and the body carries a Dormancy note stating the observation date and source;
+- repository dormancy applies only when the evaluated target is the repository or package; for a hosted product the test is applied to the product's own release or changelog record, and repository inactivity alone does not qualify.
+
+Frozen state ends when public activity resumes: `dormant_since` is removed, the evaluation returns to the routine lane, and a routine differential is scheduled for the next quarterly sweep.
 
 ## Rating Thresholds
 
@@ -102,6 +118,9 @@ On 2025-11-18, NVIDIA and Microsoft announced strategic equity commitments in An
 
 A VERDICT evaluation triggers **Anthropic-investor disclosure** when one or more of the following structural conditions obtains:
 
+**Trigger 0 — Evaluator identity**: The evaluated platform is developed or operated by Anthropic, PBC, the provider of VERDICT's evaluation tooling (see `KNOWN_FACTS.md`, Anthropic product family). Trigger 0 always co-fires Trigger 2, because every material Anthropic equity-holder is by definition a material investor in the evaluated platform.
+- Example: Claude, Claude Code. Trigger 0 fires; the evaluator-identity paragraph and the Trigger 2 paragraph are both required.
+
 **Trigger 1 — Parent identity**: The evaluated platform is operated by an entity that holds a material equity position in Anthropic.
 - Example: a toolkit operated by NVIDIA. NVIDIA holds equity commitment in Anthropic. Trigger 1 fires.
 
@@ -138,7 +157,18 @@ The asymmetric threshold (USD 1 billion on the Anthropic side, USD 100 million o
 
 When any trigger fires, the evaluation prompt's Special Considerations section includes explicit disclosure of the triggered structure. The disclosure separates corporate-level commercial and equity relationships (Trigger 1, 2, or 3) from product-level integration choices (e.g., Claude as one of N LLM provider options), in distinct paragraphs.
 
-The disclosure does not change scoring methodology. VERDICT scoring remains based exclusively on public data sources per the v0.3.1 framework, and no vendor revenue or paid certification influences the rating. The disclosure exists to inform readers of structural relationships that may affect their interpretation of the evaluation.
+When Trigger 0 fires, the following additional rules apply:
+
+- The Bias Disclosure carries the evaluator-identity paragraph (verbatim text below) immediately after the mandatory paragraph, and the record carries the structured tags `evaluator-coi` and `evaluator-identity` in addition to the Trigger 2 tags.
+- Every factual claim in the report is confirmed by web retrieval during the evaluation session; knowledge-based claims are not used at any confidence level, and the report states this evidence rule in the Contextual Analysis.
+- `evaluator_model` is recorded exactly (never `unrecorded`).
+- Layer 1 (behavioral testing) is not performed for a Trigger 0 platform under this framework version; the Future Evaluation Plan states that Layer 1 awaits a separately ratified independent-runner protocol.
+
+Evaluator-identity paragraph (verbatim; fixed under EvaluatorIdentity-001 and StrategyApproval-001 — any change requires a new ratification, and QA.md compares the published text against it character for character):
+
+> "VERDICT additionally discloses that the operator of this platform, Anthropic, PBC, is the provider of VERDICT's evaluation tooling: this evaluation was produced with a model developed by the operator of the evaluated platform. Identical evaluation criteria were applied, every claim was restricted to public sources retrieved during the evaluation session, and the relationship is recorded as evaluator-identity. Readers may wish to weigh this structural relationship when interpreting the evaluation."
+
+The disclosure does not change scoring methodology. VERDICT scoring remains based exclusively on public data sources per this framework, and no vendor revenue or paid certification influences the rating. The disclosure exists to inform readers of structural relationships that may affect their interpretation of the evaluation.
 
 ### Forward-only application
 
@@ -280,13 +310,35 @@ The Scorecard total is authoritative. If upstream references conflict, adjust th
 
 ## Differential Evaluation
 
-When a prior evaluation exists and an update is requested:
+A differential evaluation updates a published evaluation. It is produced whenever a Layer C trigger fires or the routine review falls due. It is a complete evaluation artifact, not a note: it passes the full QA protocol and supersedes the prior record in place (the prior version remains in repository history and in the record's Evaluation History table).
 
-**Re-check (mandatory):** R (full re-evaluation — new CVEs, KEV, supply chain, patch times over trailing 12 months from new evaluation date). T (new incident disclosures, updated security pages, new advisories). V (ownership changes, new certifications, version updates). Any dimension flagged in the update request.
+**Scope.** Re-evaluate every dimension in the trigger's mandatory re-check scope. R, T and V are always re-evaluated in a routine review. Any other dimension is carried forward only when every carry-forward condition below holds; otherwise it is re-evaluated. Carrying forward is a positive finding that the cited evidence is unchanged — never an inference from the absence of news.
 
-**Carry forward unless contradicted by new evidence:** D (privacy policies rarely change). I (control features rarely change). C (sandbox architecture rarely changes).
+**Carry-forward conditions** (all must hold, checked per dimension, with the check date and the URLs checked recorded in the report's Differential section):
 
-**Output requirements:** State previous evaluation date and score. Mark each dimension "Re-evaluated" or "Carried forward (no material change)." If total changes by ≥5 points, explain briefly in Executive Summary. Evaluation type: `Update`.
+1. Every source URL cited for the dimension in the prior evaluation still resolves; a moved document is re-located, its new URL recorded, and its content compared.
+2. No cited document shows a last-updated or effective date later than the prior evaluation date; undated documents are compared against the passages cited before.
+3. No release note, changelog entry, or vendor announcement in the window changes what the dimension scores — D: privacy policy, DPA, sub-processor list, ToS data clauses, training-use statements; I: emergency stop, human-in-the-loop, permission delegation; C: sandbox design, least-privilege defaults, tenant isolation.
+4. No incident in the window touches the dimension (a cross-tenant incident re-opens C; a data-handling incident re-opens D).
+
+**Field semantics on update.**
+
+| Field | Rule |
+|-------|------|
+| `evaluated_at` | The original Layer 0 date. Never changes. |
+| `updated_at` | The date the differential was completed. Set on every update, including one in which every re-checked dimension is unchanged. |
+| `previous_evaluation_date`, `previous_score` | The immediately preceding evaluation in the series (initial or update). |
+| `evaluation_type`, `differential` | `update`; per dimension `re-evaluated` or `carried-forward` (E: null at Layer 0). |
+| `evaluation_number` | Unchanged; it identifies the platform's evaluation series, not an event. |
+| `framework_version`, `target_version` | The framework version in force and the product version examined on the update date. |
+| `cve_count_12mo`, `cve_count_basis`, `max_cvss_12mo`, `cisa_kev`, `supply_chain_compromise_12mo` | Recomputed over the trailing 12 months from the update date; `cve_count_basis` = `exact`. |
+| `independence`, `parent_entity` | Re-assessed; `unrecorded` is not permitted in an update. |
+| `qa`, `evaluator_model` | Full protocol result (`unresolved` not permitted); model recorded. |
+| `next_review_due` | Recomputed by the pipeline from `updated_at`. |
+
+**Score changes.** The new score, tier and rank are published as computed, with `previous_score` alongside. If the total moves by 5 points or more, the Executive Summary names the dimensions and evidence that moved it. If an R-only re-check moves the total by 3 points or more, escalate to a full re-review before publication. Tier changes are applied by the pipeline; the Operations Tier override rule applies as usual.
+
+**Output.** Header evaluation type `Update`. A Differential section stating the previous evaluation date and score, each dimension's state, and the carry-forward checks performed (date, URLs). An Evaluation History table (date, type, score, tier, framework version) covering every evaluation in the series.
 
 ## Output Format
 
@@ -359,6 +411,11 @@ The engine applies documented fact corrections in every report. See `KNOWN_FACTS
 
 Every report passes through the QA protocol in `QA.md` before delivery. Maximum 2 revision cycles. Unresolved critical issues are flagged for human review.
 
+## Framework Changelog
+
+- **v0.3.2** — Layer C rewritten: interrupt lane triggers T1–T6, routine review at 365 days (provisional pending ReviewCadence-002), dormancy (frozen) state with `dormant_since`; Differential Evaluation procedure with carry-forward conditions and field semantics; Absolute Rule 9 minor/patch distinction; Trigger 0 (evaluator identity) added to the disclosure layer. Scoring dimensions, criteria, thresholds and tier bands are unchanged from v0.3.1, so scores remain comparable across versions. Evaluations published under v0.3.1 keep their recorded `framework_version`; the published spelling `v0.3.1-final` is an alias of v0.3.1. The disclosure layer's own version labels (v1.0, v1.1) are historical; from v0.3.2 the disclosure layer is versioned with the framework.
+- **v0.3.1** — Baseline published framework (2026-03-29).
+
 ---
 
-**Framework version:** VERDICT v0.3.1
+**Framework version:** VERDICT v0.3.2

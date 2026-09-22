@@ -26,7 +26,7 @@ These are the preconditions for the editorial authority VERDICT claims.
 
 ## Contents
 
-- `ENGINE.md` — Framework v0.3.1. Seven dimensions (V/E/R/D/I/C/T), scoring criteria, eight-step evaluation sequence, output format, absolute principles.
+- `ENGINE.md` — Framework v0.3.2. Seven dimensions (V/E/R/D/I/C/T), scoring criteria, eight-step evaluation sequence, output format, absolute principles.
 - `QA.md` — Three-category quality review covering factual accuracy, legal risk, and report quality. Blocklists for inflammatory language and AI writing tells. Severity classification (Critical / Warning / Note).
 - `KNOWN_FACTS.md` — Documented fact corrections the engine must apply during every evaluation. Entries are added as errors are identified and resolved.
 - `prompts/_template.md` — Standard template for platform-specific evaluation prompts.
@@ -50,7 +50,7 @@ https://raw.githubusercontent.com/GithubsampleZIC/verdict-engine/main/KNOWN_FACT
 
 ## Versioning
 
-The engine is versioned. Every evaluation published at getverdict.fyi is bound to the engine version under which it was conducted. The current framework is v0.3.1. Material changes to scoring criteria trigger a minor version increment and, where warranted, re-evaluation of affected platforms. Historical evaluations remain valid under their original engine version.
+The engine is versioned. Every evaluation published at getverdict.fyi is bound to the engine version under which it was conducted. The current framework is v0.3.2. Material changes to scoring criteria trigger a minor version increment and, where warranted, re-evaluation of affected platforms. Historical evaluations remain valid under their original engine version.
 
 ## Governance
 
@@ -91,4 +91,4 @@ The VERDICT Index at getverdict.fyi currently covers 55 AI agent platforms score
 
 ## Framework version
 
-VERDICT v0.3.1
+VERDICT v0.3.2

@@ -19,6 +19,18 @@ This document accumulates facts that have been incorrectly stated in past evalua
 
 *(Future entries are appended below as corrections are identified and resolved.)*
 
+### Anthropic, PBC — evaluator identity (Framework v0.3.2 Trigger 0)
+
+- **Operator:** Anthropic PBC, registered address 548 Market St, PMB 90375, San Francisco, CA 94104 (United States); data controller for users outside the European Region. The European Region controller is Anthropic Ireland, Limited (Dublin).
+  Source: Anthropic Privacy Policy, section 9 "Contact Information" — https://www.anthropic.com/legal/privacy (verified 2026-09-21; archived edition effective 2026-07-08 at https://www.anthropic.com/legal/archive/21d66aa9-68f6-4356-ba01-2825b0f81805 carries the same entity and address; site footer "© 2026 Anthropic PBC").
+- **Corporate form:** Delaware public benefit corporation.
+  Sources: Harvard Law School Forum on Corporate Governance, "Anthropic Long-Term Benefit Trust" (2023-10-28), authored by Anthropic's outside counsel — https://corpgov.law.harvard.edu/2023/10/28/anthropic-long-term-benefit-trust/ ; U.S. federal entity registration (legal name ANTHROPIC, PBC; state of incorporation DE; HQ San Francisco) as mirrored at https://www.highergov.com/awardee/anthropic-pbc-782300426 (SAM.gov mirror; secondary).
+- **Status:** Provider of VERDICT's evaluation tooling. Any product developed or operated by Anthropic PBC fires ENGINE.md Trigger 0 (evaluator identity), which always co-fires Trigger 2 (material Anthropic equity-holders are by definition material investors in the evaluated platform).
+  Sources: ENGINE.md Bias Disclosure verbatim text ("This evaluation uses Claude (Anthropic) as its tooling …") — https://github.com/zinova-lab/verdict-engine/blob/main/ENGINE.md ; recorded `evaluator_model` values in canonical platform files (e.g. `claude-opus-4-7` in https://github.com/ZinovaCreation/verdict-platforms/blob/main/platforms/aider.md).
+- **Product family (non-exhaustive; the operator test is decisive, not this list):** Claude (consumer and enterprise apps, claude.ai), Claude Code, Claude Cowork, Claude in Chrome, and the Claude Platform (API / developer platform), as listed on Anthropic's site — https://claude.com/product/overview , https://claude.com/product/claude-code , https://claude.com/platform/api . MIT AI Agent Index 2025 entries `claude` and `claude-code` are in this family (https://aiagentindex.mit.edu/2025/claude , https://aiagentindex.mit.edu/2025/claude-code).
+- **Approved language:** the evaluator-identity paragraph defined verbatim in ENGINE.md (fixed under EvaluatorIdentity-001; any change requires a new ratification).
+- **Do NOT state:** that the evaluation is independent of the operator, or that the evaluator relationship is limited to market competition.
+- **Root cause:** Entry created 2026-09-19 (EvaluatorIdentity-001; sources added 2026-09-21 per StrategyApproval-001 clause (a)) ahead of the MIT AI Agent Index queue reaching these entries; no prior published error.
 
 ## Anthropic Equity-Holder Records (Framework v1.1 Reference)
 

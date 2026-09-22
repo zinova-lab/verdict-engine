@@ -12,7 +12,7 @@ Project Knowledge bootstrap. On divergence, this repo's files win.
 
 ## Framework specification (stable core)
 
-- [ENGINE.md](ENGINE.md): the VERDICT evaluation framework (v0.3.1).
+- [ENGINE.md](ENGINE.md): the VERDICT evaluation framework (v0.3.2).
 - [QA.md](QA.md): QA protocol and Operations Override Rules.
 - [KNOWN_FACTS.md](KNOWN_FACTS.md): entity facts applied during evaluation.
 

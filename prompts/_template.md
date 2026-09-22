@@ -8,6 +8,7 @@ Fill in each section. Remove instructional lines (prefixed with `>`) before use.
 
 **Name:** [platform name]
 **Owner:** [legal entity + jurisdiction + independence status]
+**Selection basis:** [`list:<list-id>-<edition>` or `interrupt:<CVE/GHSA id>` — copied verbatim into front matter `selection_basis`; evaluations #070 onward]
 **Category:** [e.g., AI Coding Agent / Workflow Automation / Browser Agent]
 **Primary product surfaces:** [list product forms — CLI, web app, SDK, cloud service, self-hosted — and the distribution channel for each]
 **Product URL:**
@@ -18,7 +19,7 @@ Fill in each section. Remove instructional lines (prefixed with `>`) before use.
 
 ## EVALUATION SCOPE
 
-Evaluate [platform] under VERDICT Framework v0.3.1 (Layer 0, public documentation only).
+Evaluate [platform] under VERDICT Framework v0.3.2 (Layer 0, public documentation only).
 Score dimensions V, R, D, I, C, T. E excluded from Layer 0. Max: 85 points.
 
 ---
@@ -81,6 +82,7 @@ Score dimensions V, R, D, I, C, T. E excluded from Layer 0. Max: 85 points.
 ## SPECIAL CONSIDERATIONS
 
 > Use only for material facts that affect scoring or phrasing — supply chain context, maintainer structure, architectural distinctiveness. No commentary or speculation. Three entries maximum.
+> Disclosure layer (ENGINE.md): state which of Trigger 0 (evaluator identity — operator is Anthropic PBC), Trigger 1, 2, 3 fire, or "None". A Trigger 0 platform carries the evaluator-identity paragraph verbatim, the tags `evaluator-coi` + `evaluator-identity`, session-retrieval-only evidence, and no Layer 1.
 
 ### 1. [Concise heading]
 [1–3 sentences]

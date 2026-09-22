@@ -29,6 +29,8 @@ If any item produces a Critical issue, revise the draft and re-run the full revi
 - Rating (Low/Mid/High) matches the threshold table (70%+ High, 40–69% Mid, 0–39% Low).
 - CISA KEV entries appear in Scorecard, Incident Timeline, Executive Summary, and Contextual Analysis.
 - Japanese summary scores match English report scores exactly.
+- Update evaluations: `previous_score` equals the score of the superseded record; every carried-forward dimension lists its checked sources and check date; an Evaluation History table is present; `evaluated_at` equals the original Layer 0 date.
+- `selection_basis` (evaluations #070 onward): present; a `list:` value names an adopted list edition of the Population Definition in force; no placeholder value.
 
 ### Verification-capability awareness
 - Web-search-confirmed claims: treat as verified.
@@ -55,6 +57,7 @@ If any item produces a Critical issue, revise the draft and re-run the full revi
 - No sarcasm, irony, or rhetorical questions that could read as mockery.
 - No ad hominem references to individuals. Critique systems, not people.
 - Complies with "witness, not judge."
+- Evaluator identity (ENGINE.md Trigger 0): if the operator is Anthropic, PBC, the evaluator-identity paragraph is present verbatim after the mandatory paragraph, the Trigger 2 paragraph is present, tags `evaluator-coi` and `evaluator-identity` are set, `evaluator_model` is recorded, and no knowledge-based claim appears in the report.
 
 ### Inflammatory language blocklist (auto-fail if applied to a vendor)
 
@@ -70,7 +73,7 @@ catastrophic (unless quoting a CVSS severity label)
 `malicious` and `catastrophic` are acceptable when describing a threat actor's actions, not the vendor's.
 
 ### Severity
-- **Critical:** Intent attribution, prescriptive negative recommendation, blocklist word applied to a vendor.
+- **Critical:** Intent attribution, prescriptive negative recommendation, blocklist word applied to a vendor, missing evaluator-identity paragraph on a Trigger 0 platform.
 - **Warning:** Missing positive finding, absolutist claim, comparative language.
 - **Note:** Tone slightly aggressive but technically defensible.
 
@@ -191,4 +194,4 @@ After 2 revision cycles with unresolved Critical issues, flag as `[UNRESOLVED �
 
 ---
 
-**Protocol version:** 1.1-engine
+**Protocol version:** 1.2-engine (aligned with Framework v0.3.2)
