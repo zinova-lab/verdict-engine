@@ -1,8 +1,9 @@
-# VERDICT Population Definition v1
+# VERDICT Population Definition
 
+**Document version:** 1.1 (2026-09-21) — adds the review-method paragraph in §6; v1.0 2026-09-19. The population version date is unchanged.
 **Version date:** 2026-09-19 (single-day retrieval of every source below)
 **Applies to:** selection of evaluations #070 onward, and the coverage figures VERDICT publishes
-**Framework:** VERDICT v0.3.1 · Proposed location: `verdict-engine/docs/selection/population_definition_v1.md` · Data: `verdict-platforms/data/census/2026-09/`
+**Framework:** VERDICT v0.3.1 (scoring); review method per Framework v0.3.2 Layer C · Location: `verdict-engine/docs/selection/population_definition.md` · Data: `verdict-platforms/data/census/2026-09/`
 
 VERDICT evaluates AI agent platforms against public data. Until this document, the question "why these 69 platforms?" had no written answer: the first 69 were selected one by one during 2025–2026, before any criteria existed. This document fixes a population — the set of platforms VERDICT measures itself against — using third-party lists and mechanical conditions only. Inclusion in the population is not an assessment of any platform. It is a sampling frame, so that VERDICT can state what fraction of the field it has covered and what it has not.
 
@@ -68,6 +69,8 @@ VERDICT commits to evaluating every system in the MIT AI Agent Index 2025. Publi
 
 Tooling and component repositories (coding agents, browser automation, frameworks, runtimes, observability, memory, guardrails) form a second queue ordered by stars, descending, with no completion commitment. A vocabulary screen that recognises prompt collections, skill packs, guides, and similar repository types is used to order that queue. It affects ordering only; it does not change the population or any coverage figure.
 
+Review of evaluated platforms follows Framework v0.3.2 Layer C (ENGINE.md): an interrupt lane fired by a CVE/GHSA, a CISA KEV entry, a supply-chain compromise, a reported incident, or a change of terms or ownership, plus a routine review 365 days after the last evaluation date (interval provisional pending ReviewCadence-002).
+
 ## 7. Updates
 
 The population is redrawn annually from the then-current editions of the same lists and a fresh GitHub snapshot, with a new version date. Between annual versions, quarterly deltas record additions and removals without changing the denominator used for the year's coverage figures. Each version keeps its dataset and digests.
@@ -78,4 +81,4 @@ If a publisher stops maintaining a list or changes it so that tests (a)–(c) no
 
 ---
 
-*Population Definition v1 · VERDICT · ZinovaCreation · 2026-09-19. Dataset: `census_v1_2026-09-19.csv`, `sha256sums.txt`, `mit_2025_entries.json` (CC-BY 4.0, MIT AI Agent Index).*
+*Population Definition v1.1 (2026-09-21; v1.0 2026-09-19) · VERDICT · ZinovaCreation. Dataset: `census_v1_2026-09-19.csv`, `sha256sums.txt`, `mit_2025_entries.json` (CC-BY 4.0, MIT AI Agent Index).*
