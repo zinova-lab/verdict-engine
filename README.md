@@ -30,6 +30,7 @@ These are the preconditions for the editorial authority VERDICT claims.
 - `QA.md` — Three-category quality review covering factual accuracy, legal risk, and report quality. Blocklists for inflammatory language and AI writing tells. Severity classification (Critical / Warning / Note).
 - `KNOWN_FACTS.md` — Documented fact corrections the engine must apply during every evaluation. Entries are added as errors are identified and resolved.
 - `prompts/_template.md` — Standard template for platform-specific evaluation prompts.
+- `prompts/_template_update.md` — Template for update (differential) evaluations under Framework v0.3.2 Layer C; file name `{NNN}_{slug}_update_{YYYY-MM-DD}.md`.
 - `prompts/057_aider.md` — Reference prompt implementing the template.
 
 This repository does not contain individual evaluation reports. Those are published at getverdict.fyi.
