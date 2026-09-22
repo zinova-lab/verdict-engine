@@ -239,6 +239,8 @@ CVE evaluation period: trailing 12 months from evaluation date.
 
 **Note:** If CVSS 9.0+ exists, both the count penalty and the maximum-CVSS score of 0 apply independently.
 
+**Attribution note (Attribution-CVE-001, 2026-09-22):** CVE and KEV records are product-scoped. `cve_count_12mo`, `max_cvss_12mo` and `cisa_kev` count only CVEs whose affected product is the evaluated target as bound by `target_version` — not the operator's other products and not third-party dependencies. A dependency CVE that was exploited against deployments of the platform (for example a KEV-listed framework vulnerability in the platform's web layer) is recorded in the Incident Timeline with the marker `dependency: <vendor/product>` and discussed in the Contextual Analysis; it does not enter the three fields or the Scorecard KEV line, and it is not a supply chain compromise unless the vendor's own package, account, or build pipeline was compromised. Advisories without a CVE ID (GHSA, PYSEC) are recorded in the Incident Timeline and considered under T (CVE publication posture) and the Contextual Analysis; they are not counted in `cve_count_12mo`. They fire T1 when their published severity is 7.0 or higher.
+
 ### D — Data Conduct | 15 points
 
 | Criterion | Points | Scoring |
@@ -414,6 +416,7 @@ Every report passes through the QA protocol in `QA.md` before delivery. Maximum 
 ## Framework Changelog
 
 - **v0.3.2** — Layer C rewritten: interrupt lane triggers T1–T6, routine review at 365 days (provisional pending ReviewCadence-002), dormancy (frozen) state with `dormant_since`; Differential Evaluation procedure with carry-forward conditions and field semantics; Absolute Rule 9 minor/patch distinction; Trigger 0 (evaluator identity) added to the disclosure layer. Scoring dimensions, criteria, thresholds and tier bands are unchanged from v0.3.1, so scores remain comparable across versions. Evaluations published under v0.3.1 keep their recorded `framework_version`; the published spelling `v0.3.1-final` is an alias of v0.3.1. The disclosure layer's own version labels (v1.0, v1.1) are historical; from v0.3.2 the disclosure layer is versioned with the framework.
+  - 2026-09-22 clarification (Attribution-CVE-001): product-scoped attribution of CVE/KEV records; dependency CVEs and CVE-less advisories. No version change.
 - **v0.3.1** — Baseline published framework (2026-03-29).
 
 ---
