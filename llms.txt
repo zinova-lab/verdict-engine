@@ -22,6 +22,7 @@ Project Knowledge bootstrap. On divergence, this repo's files win.
   sustainability design (Option C / D).
 - [operations_session_sop.md](docs/operations_session_sop.md)
 - [operations_sync_automation_proposal.md](docs/operations_sync_automation_proposal.md)
+- [operations_sweep_procedure.md](docs/operations_sweep_procedure.md): Layer C trigger detection (weekly feed scan, quarterly sweep), differential-evaluation intake, dormancy handling
 - [operations_override_log.md](docs/operations_override_log.md): institutional
   override registry.
 - [deploy_status.md](docs/deploy_status.md): canonical deployed-platform record.
