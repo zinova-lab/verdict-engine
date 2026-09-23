@@ -72,6 +72,8 @@ Use for every Layer C update: routine review (365-day lane) or interrupt lane (T
 - `cve_count_12mo` (basis `exact`), `max_cvss_12mo`, `cisa_kev`, `supply_chain_compromise_12mo` recomputed over the new window.
 - `independence` assessed (`unrecorded` not permitted); `qa` full protocol (`unresolved` not permitted).
 - `next_review_due` is recomputed by the pipeline; do not author it.
+- `verdict.<dim>.note`: at most 80 characters per dimension (one clause per fact, semicolon-separated); evidence and URLs belong in the report body, not the note.
+- `dormant_since`: author only while the record is in frozen state (ENGINE.md, Layer C dormancy). A non-dormant record omits the key entirely; do not write `dormant_since: null`. When frozen state ends, remove the key.
 - If the R-only change moves the total by ≥3 points, escalate to a full re-review (all six dimensions) before publication. If the total moves by ≥5 points, the Executive Summary names the dimensions and evidence that moved it.
 
 ---
