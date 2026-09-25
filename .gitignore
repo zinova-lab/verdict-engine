@@ -21,3 +21,4 @@ Thumbs.db
 ENGINE_md_tier_patch.md
 integrate_engine_patch.py
 *.backup-*
+scripts/lib/*.backup
