@@ -32,6 +32,18 @@ This document accumulates facts that have been incorrectly stated in past evalua
 - **Do NOT state:** that the evaluation is independent of the operator, or that the evaluator relationship is limited to market competition.
 - **Root cause:** Entry created 2026-09-19 (EvaluatorIdentity-001; sources added 2026-09-21 per StrategyApproval-001 clause (a)) ahead of the MIT AI Agent Index queue reaching these entries; no prior published error.
 
+### Agno / Agno Inc. (formerly Phidata / Phidata Inc.)
+
+- **Operator:** Agno Inc., registered in New York, United States; 169 Madison Ave STE 2420, New York, NY 10016; support@agno.com (Terms of Service, last updated 2025-01-21, opening clause and §24; Privacy Notice §16). Consistent with the site copyright "© 2026 Agno Inc." and the repository LICENSE.
+  Sources: https://os.agno.com/legal/tos ; https://os.agno.com/legal/privacy ; https://github.com/agno-agi/agno/blob/main/LICENSE
+- **Status:** Independent; no parent entity. One recorded funding round (Seed, USD 5.4M, 2024-08-29; investors include GreatPoint Ventures) per CB Insights (secondary; profile retained under the former name at /company/phidata). No Amazon / Google / Microsoft / NVIDIA equity, board or channel relationship found: ENGINE.md disclosure Triggers 0–3 do not fire.
+  Source: https://www.cbinsights.com/company/phidata/financials
+- **Team / corporate context:** Product, site and repository renamed from Phidata to Agno; the GitHub organization remains `agno-agi`; `agno-agi/phidata` and PyPI `phidata` are predecessor artifacts outside the evaluated target. `agno-agi/agno` is licensed Apache-2.0 since February 2026 (changed from MPL 2.0); `agno-agi/phidata` remains MPL 2.0. Telemetry (default ON, metadata only) is observed at os-api.agno.com; the hosted Control Plane is os.agno.com (app.agno.com is being sunset).
+  Sources: https://www.agno.com/articles/community-roundup-february-2026 ; https://docs.agno.com/telemetry ; https://community.agno.com/t/logs-to-os-api-agno-com/1864
+- **Do NOT state:** "Phidata Inc." as the current operator; "MPL 2.0" as the license of `agno-agi/agno`; "api.phidata.com" as the telemetry endpoint; "no privacy policy" (Privacy Notice at os.agno.com/legal/privacy, last updated 2026-04-20); "Zero CVEs" for the trailing-12-month windows ending 2026-03-31 or 2026-09-25 (CVE-2025-8665, CVE-2025-64168, CVE-2026-35002, CVE-2026-10105, CVE-2026-76832 are on record).
+- **Approved language:** "Agno (formerly Phidata), operated by Agno Inc.; SDK and AgentOS runtime under Apache-2.0; hosted Control Plane at os.agno.com; legacy Phidata artifacts excluded from CVE attribution."
+- **Root cause:** The #032 initial record (2026-03-31) was a migrated capture without per-dimension sources; it carried operator "Phidata Inc." although the Terms of Service had named Agno Inc. since 2025-01-21, category "OSS (MPL 2.0)" after the February 2026 license change, telemetry endpoint api.phidata.com, "No privacy policy on agno.com", and `cve_count_12mo: 0` although two CVEs (published 2025-08-06 and 2025-10-31) fell inside its window. Corrected by the 2026-09-25 update (framework v0.3.2; KnownFacts-Agno-001).
+
 ## Anthropic Equity-Holder Records (Framework v1.1 Reference)
 
 These facts establish the **material Anthropic equity-holders set** referenced in ENGINE.md framework v1.1 materiality framework. Inclusion criterion: publicly-disclosed equity commitment of USD 1 billion or greater (whether closed or subject to closing conditions). The set is used by framework v1.1 Triggers 1 and 2 to determine when Special Considerations disclosure is required.
