@@ -153,6 +153,8 @@ For Trigger 2 purposes, a material investor in the evaluated platform is one tha
 
 The asymmetric threshold (USD 1 billion on the Anthropic side, USD 100 million on the evaluated-platform side) reflects that small AI startups raising USD 100 million rounds treat that level as strategic, while Anthropic's scale means sub-billion stakes are unlikely to convey strategic significance.
 
+**Designation note (Trigger2-Designation-001, 2026-09-25):** A designation as lead or strategic investor is read from the statements of the parties to the round — the evaluated company, the round's lead investor, or the investor itself. "Strategic partner" or equivalent wording used by one of those parties for a participant in the round counts as a strategic-investor designation. Characterizations by third parties (press, data aggregators) are not designations. A corporate venture arm is read as its parent (for example, NVentures as NVIDIA). The engine records which party's statement it relied on, with its URL.
+
 ### Disclosure structure
 
 When any trigger fires, the evaluation prompt's Special Considerations section includes explicit disclosure of the triggered structure. The disclosure separates corporate-level commercial and equity relationships (Trigger 1, 2, or 3) from product-level integration choices (e.g., Claude as one of N LLM provider options), in distinct paragraphs.
@@ -212,6 +214,8 @@ Layer 0 total: 85 points (V + R + D + I + C + T). E is Layer 1+ only.
 | Independent certification | 4 | SOC 2 report publicly available: 4. SOC 2 customers-only: 2. SOC 3 only: 1. None: 0. |
 | Functional reproducibility docs | 2 | Complete API reference + behavioral spec: 2. Partial: 1. Minimal: 0. |
 
+**Source code note (Criterion-VSource-001, 2026-09-25):** "Full OSS" (4) means the evaluated product's complete source — including any hosted service, control plane or management layer the operator sells for it — is published under an OSI-approved license. "Core components only" (2) covers open core (an OSI-licensed core with a closed, commercial or separately licensed enterprise layer or hosted control plane) and source-available licenses that are not OSI-approved (for example ELv2, the Sustainable Use License, BSL). Closed source (0) is unchanged. The engine names the license of each part it relied on.
+
 ### E — Effectiveness | 15 points (Layer 1+ only)
 
 In Layer 0, all items are "not evaluated" and excluded from scoring.
@@ -240,6 +244,12 @@ CVE evaluation period: trailing 12 months from evaluation date.
 **Note:** If CVSS 9.0+ exists, both the count penalty and the maximum-CVSS score of 0 apply independently.
 
 **Attribution note (Attribution-CVE-001, 2026-09-22):** CVE and KEV records are product-scoped. `cve_count_12mo`, `max_cvss_12mo` and `cisa_kev` count only CVEs whose affected product is the evaluated target as bound by `target_version` — not the operator's other products and not third-party dependencies. A dependency CVE that was exploited against deployments of the platform (for example a KEV-listed framework vulnerability in the platform's web layer) is recorded in the Incident Timeline with the marker `dependency: <vendor/product>` and discussed in the Contextual Analysis; it does not enter the three fields or the Scorecard KEV line, and it is not a supply chain compromise unless the vendor's own package, account, or build pipeline was compromised. Advisories without a CVE ID (GHSA, PYSEC) are recorded in the Incident Timeline and considered under T (CVE publication posture) and the Contextual Analysis; they are not counted in `cve_count_12mo`. They fire T1 when their published severity is 7.0 or higher.
+
+**Window and score-source note (Attribution-CVE-002, 2026-09-25):**
+- *Window basis.* A vulnerability enters the trailing 12-month window on its first public disclosure date: the earliest of the CVE record's `datePublished`, the publication of a GHSA or vendor advisory, or a public issue that identifies it as a vulnerability. A fix commit, pull request or release note that does not identify the change as a vulnerability is not a public disclosure; such a vulnerability enters the window on its advisory or CVE date.
+- *Retroactive CVEs.* A CVE ID assigned later to a vulnerability first disclosed before the window start is recorded in the Incident Timeline as "retroactive CVE — first disclosed <advisory id> <date>" and is excluded from `cve_count_12mo` and `max_cvss_12mo`.
+- *Score source.* The recorded score is taken in this order: NIST (NVD) Primary CVSS v3.1 → CNA v3.1 → CISA-ADP v3.1 → CNA v3.0 → CNA v4.0, with the version stated in the report. Where a record's stated base score differs from the score computed from its own vector, the computed score is recorded and the stated value is noted.
+- *Scope.* This note governs `cve_count_12mo`, `max_cvss_12mo` and the two R criteria that use them (CVE count, maximum CVSS severity). KEV entries are listed under the KEV flag protocol regardless of window.
 
 ### D — Data Conduct | 15 points
 
@@ -417,6 +427,7 @@ Every report passes through the QA protocol in `QA.md` before delivery. Maximum 
 
 - **v0.3.2** — Layer C rewritten: interrupt lane triggers T1–T6, routine review at 365 days (provisional pending ReviewCadence-002), dormancy (frozen) state with `dormant_since`; Differential Evaluation procedure with carry-forward conditions and field semantics; Absolute Rule 9 minor/patch distinction; Trigger 0 (evaluator identity) added to the disclosure layer. Scoring dimensions, criteria, thresholds and tier bands are unchanged from v0.3.1, so scores remain comparable across versions. Evaluations published under v0.3.1 keep their recorded `framework_version`; the published spelling `v0.3.1-final` is an alias of v0.3.1. The disclosure layer's own version labels (v1.0, v1.1) are historical; from v0.3.2 the disclosure layer is versioned with the framework.
   - 2026-09-22 clarification (Attribution-CVE-001): product-scoped attribution of CVE/KEV records; dependency CVEs and CVE-less advisories. No version change.
+  - 2026-09-25 clarifications: Attribution-CVE-002 (window entry by first public disclosure date; retroactive CVEs excluded from the count and maximum; score-source order and vector-computed score), Criterion-VSource-001 (meaning of "Full OSS" vs "Core components only" for V source code disclosure; codifies #059, #060, #064–#068), Trigger2-Designation-001 (lead/strategic designation read from the statements of the parties to the round). No version change; scoring criteria, thresholds and tier bands unchanged.
 - **v0.3.1** — Baseline published framework (2026-03-29).
 
 ---
