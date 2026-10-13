@@ -1,7 +1,7 @@
 # VERDICT Operations — 四半期 sweep 運用手順
 
-**Version:** 1.1（2026-09-22）。v1.0（同日起草）に ReviewCadence-Sweep-001 の条件 (a)〜(g) と追加事項 A／B／C を反映。
-**根拠:** ENGINE.md v0.3.2（verdict-engine `9f64418`）Layer C「sweep の手順は operations documents で定義する」。StrategyApproval-001、ReviewCadence-001、ReviewCadence-Sweep-001。
+**Version:** 1.2（2026-10-13）。v1.1（2026-09-22、ReviewCadence-Sweep-001 の条件 (a)〜(g) と追加事項 A／B／C）に、ReviewCadence-002（routine 365 日確定）、EvalFileScope-001／-ext／-ext-2（公開ファイルは Block 1 のみ）、Trigger2-ParentLevel-001（親会社レベルの T5 照合）、PatchReview-EB-2026-10-07（operator copy の置き場）と pilot Sprint-001 の教訓を反映。
+**根拠:** ENGINE.md v0.3.2（verdict-engine `9f64418`）Layer C「sweep の手順は operations documents で定義する」。StrategyApproval-001、ReviewCadence-001、ReviewCadence-Sweep-001、ReviewCadence-002、EvalFileScope-001／-ext／-ext-2、Trigger2-ParentLevel-001、PatchReview-EB-2026-10-07。
 **適用範囲:** 公開済み評価の更新入口（interrupt lane／routine lane／dormancy）と、母集団の四半期差分。差分評価の作成は Engine の作業で、本書は Operations の手順のみを定める。
 **置き場:** `verdict-engine/docs/operations_sweep_procedure.md`（ReviewCadence-Sweep-001 承認）。
 
@@ -21,9 +21,9 @@
 |---|---|---|
 | 週次 light scan | 毎週月曜（JST）、script のみ | NVD・GHSA・CISA KEV feed 由来のシグナルに限る（T1 CVSS 7.0+、T2、および feed で観測できる T3）。キーワード検索は行わない。該当があれば当日中に Engine へ。候補 0 でも `#daily-log` に 1 行。`updated_at`／last verified には触れない |
 | 四半期 sweep | 各四半期の第 1 週（1・4・7・10 月、anchor 固定） | §4 の全手順（T1 7.0 未満、T5、T6、T3／T4 のキーワード検索候補、routine 期日、休眠判定、母集団差分） |
-| routine（365 日、暫定） | 四半期 sweep 内で期日到来分を抽出 | base = `updated_at` があればそれ、無ければ `evaluated_at`。間隔は ReviewCadence-002 で確定 |
+| routine（365 日、ReviewCadence-002 で確定） | 四半期 sweep 内で期日到来分を抽出 | base = `updated_at` があればそれ、無ければ `evaluated_at`。`next_review_due` = base + 365（`validate.py` check 9 と `build_index.py` の共通定数 `REVIEW_CADENCE_DAYS`）。pilot 5 件の暫定 +90 は撤回済み |
 
-第 1 回 sweep は 2026-10 第 1 週を目標とし、sweep.py の dry run 完了を前提とする。遅延しても 2026-10 内。E-7（superagi の `dormant_since`）は第 1 回で付与。
+第 1 回 sweep は sweep.py の NVD パラメータ修正と ReviewCadence-002 の実装（2026-10-16 以降、同じ push）を前提とし、2026-10 内に行う。修正前の dry run は KEV＋GHSA 照合に限る。E-7（superagi の `dormant_since`）は第 1 回で付与。
 
 ## 3. 入力
 
@@ -37,9 +37,9 @@
 2. **母集団差分。** GitHub topic スナップショットを再取得し、直近の年次版との差分（追加・除外・★変動）を `data/census/<YYYY-MM>/delta_<date>.csv` に記録。分母の数値は年次まで変えない。
 3. **T1／T2 照合。** 全件について trailing 12 か月の CVE を NVD で再集計し、記録値（`cve_count_12mo`、`max_cvss_12mo`）との差を観測表に出す。KEV feed と `cisa_kev` を照合し、新規追加は T2（即時扱い）。
 4. **T3／T4 候補出し。** 供給網侵害・重大インシデントは公開報道の 2 独立ソース要件があるため、機械照合はキーワード検索の候補出しまで。候補表（非公開）で Engine に渡す。判定は Engine。
-5. **T5 照合。** 各件の privacy policy／ToS／会社情報ページの last-updated 表示を取得し、前回 sweep 以降の変更を観測表に出す。所有者変更・改名は公開発表の URL を添える。
+5. **T5 照合。** 各件の privacy policy／ToS／会社情報ページの last-updated 表示を取得し、前回 sweep 以降の変更を観測表に出す。所有者変更・改名は公開発表の URL を添える。**親会社レベル（Trigger2-ParentLevel-001）：** `parent_entity` を持つ件は、支配連鎖の各社（最終親会社まで）の資金調達発表を取得し、material set 構成員の lead／co-lead／strategic 指定の有無を観測表に出す（lane = T5、`observed_value` は発表 URL と当事者の指定語）。Trigger 2 の発火判定と開示文は Engine。
 6. **休眠判定。** repo が評価対象の件は `pushed_at`・最新 release 日、hosted 製品は製品の changelog／release ページの最終更新日を観測。12 か月無活動を観測表に出す（Layer C：hosted 製品は repo 停滞だけでは非該当）。既に `dormant_since` を持つ件は活動再開の有無を観測。
-7. **routine 期日。** base ＋ 暫定間隔が次の sweep までに到来する件を抽出。
+7. **routine 期日。** base ＋ 365 日（ReviewCadence-002）が次の sweep までに到来する件を抽出。
 8. **sweep report。** §5 の 2 層で出力し、`#daily-log` に要約を記録、Engine に渡す。
 
 ## 5. sweep report の 2 層
@@ -55,15 +55,18 @@
 Engine から受け取るもの（1 件につき）：
 - 更新済み `platforms/<slug>.md` 全文（Differential Evaluation の field 規則どおり：`evaluated_at` 不変、`updated_at` = 完了日、`previous_*` = 直前の評価、`evaluation_type: update`、`differential` は次元ごとに re-evaluated／carried-forward、CVE 系 field は更新日基準で再計算、`qa`・`evaluator_model` 記録、body に Differential 節と Evaluation History の追記行）。
 - Differential 節に carry-forward check の日付と URL。
-- Engine の作業時間。Ops は受領・validate・deploy の時間を足して pilot 記録にする。
+- Engine の作業時間。Ops は受領・validate・deploy の時間を足して pilot 記録にする。評価は fresh chat（Type D、stateless）で実行されたことを QA チェックリストで確認する。
+- 納品ファイル（`verdict_NNN_<slug>[_update].md`）は **operator copy**（Block 1 の英語 report ＋ Block 2 の日本語サマリ／カード用タグ）。公開リポジトリに commit するのは Block 1 のみ（EvalFileScope-001）。納品ファイルはリポジトリ外の `_stage_iii/operator_blocks/` に保管する（PatchReview-EB-2026-10-07 条項 1）。
 
 Ops の手順：
-1. `validate.py` 全件 valid。**暫定（pilot 5 件限り）：** check 9 は `updated_at + 90 日` を強制しているため、pilot の更新ファイルは `next_review_due = updated_at + 90` で validate を通す。この暫定は pilot 5 件に限り、順序は pilot 5 → ReviewCadence-002（間隔確定・check 9 定数・`next_review_due` 一括再導出）→ 一括検証。`next_review_due` は非描画のため表示上の影響はない。
-2. スコアが 5 点以上動いた件は Executive Summary に理由が書かれているか、R のみの再確認で 3 点以上動いた件は full re-review に上がっているかを確認（書式チェックであって内容判断ではない）。
-3. commit（explicit path）→ push → workflow（validate → build_index → bot rebuild）→ `git pull --ff-only`。
-4. サイト再描画：対象ページ（`render_index.render`）、index カード（`render_card`）、rankings（`render_rankings.py`）。再描画前に `/tmp` で live と比較し、意図した行以外が変わっていないことを確認してから書く。
-5. 公開注記の更新：最初の差分評価が公開された時点で `/notices/review-status/` を「in progress」＋ 完了数／N ＋ 直近公開日 ＋ 順序（CVE>0 → agent → 残り）に改める。再開予定日は書かない。完了数は canonical 派生（`evaluation_type: update` かつ `updated_at ≥ 2026-08-28` の件数、分母は runtime N）。pilot 期間は differential の deploy と同一 commit での手書き可、一括検証開始までに render 派生へ移す。QA FULL。
-6. verdict-index commit → push → `curl` で本番確認 → `#daily-log`。
+1. **Block 1 の切り出し。** 英語 report の h1（`# VERDICT Evaluation …`）より前のプリアンブルと、末尾の ```` ```japanese-summary ```` ブロックを除去する。除去範囲に Block 1 のセクション見出し（Executive Summary／Scorecard／Dimension Detail／Incident Timeline／Contextual Analysis／VERDICT Record／Evaluation History）が含まれないこと、残るフェンス数が偶数であることを assert。裁定が名指ししていない class の内容（QA REVIEW ブロック等）が除去範囲に見つかったら commit 前に止めて報告（EvalFileScope-001-ext-2 条項 5）。CJK の走査は python で行う（macOS grep はマルチバイト範囲を誤判定）。引用文中の日本語は正規化しない（同条項 2）。census と mutation は同一スクリプト実行で数える（同条項 6）。
+2. `validate.py` 全件 valid。`next_review_due` = base + 365（ReviewCadence-002、check 9）。front matter の機械修正（`github` の repo 形式、YAML anchor の展開、`dormant_since` の省略、note ≤ 80 字）は intake で行い、スコア・日付・tag には触れない。
+3. スコアが 5 点以上動いた件は Executive Summary に理由が書かれているか、R のみの再確認で 3 点以上動いた件は full re-review に上がっているかを確認（書式チェックであって内容判断ではない）。
+4. 変更 → assert（staged 件数）→ commit → validate → render diff → push は **1 本の `&&` チェーン**で実行し、どこかで失敗したら commit も push も走らせない。commit message は mutation の報告を見てから書く。commit は explicit path（verdict-engine では `git add -A` を使わない）。`--amend` は未 push かつ HEAD が対象 commit のときだけ。誤った commit を直すときは `reset --mixed` で最後の正しい commit に戻り、path ごとに積み直す（force-push はしない）。push 後 → workflow（validate → build_index → bot rebuild）→ `git pull --ff-only`。
+5. サイト再描画：対象ページ（`render_index.render`）、index カード（`render_card`）、rankings（`render_rankings.py`）。再描画前に一時ディレクトリで live と比較し、意図した行以外が変わっていないことを確認してから書く。canonical の content-only 変更（本文のみ、front matter 不変）では 70 ページ＋index の byte 一致を受け入れ条件にする。再描画後、ページの Updated 表記が `YYYY-MM-DD` であることを確認する（n8n ページで `.` 区切りを観測、renderer 側未修正）。
+6. 公開注記の更新：最初の差分評価が公開された時点で `/notices/review-status/` を「in progress」＋ 完了数／N ＋ 直近公開日 ＋ 順序（CVE>0 → agent → 残り）に改める。再開予定日は書かない。完了数は canonical 派生（`evaluation_type: update` かつ `updated_at ≥ 2026-08-28` の件数、分母は runtime N）。pilot 期間は differential の deploy と同一 commit での手書き可、一括検証開始までに render 派生へ移す。QA FULL。
+7. verdict-index commit → push → `curl` で本番確認 → `#daily-log`。
+8. **PK 差し替え。** ENGINE.md／QA.md／KNOWN_FACTS.md を変える framework commit の後、同じ Ops ステップで Engine Project Knowledge の 3 コピー（`VERDICT_eval_engine_v0_3_2.md`、`VERDICT_QA_protocol_v1_2_engine.md`、`VERDICT_KNOWN_FACTS.md`）を commit hash 入りバナー付きで生成し、本文一致を diff で確認してから差し替える。生成物は `archive/pk_engine_<hash>/` に控える。
 
 ## 7. 休眠（E-7）の手順
 
@@ -79,7 +82,7 @@ Ops の手順：
 ## 9. 記録
 
 - `#daily-log`：週次 scan（候補 0 でも 1 行）、四半期 sweep の実施日・観測件数（lane 別）・Engine への引き渡し、差分評価の公開。
-- worklog：provenance に関わる訂正（field の復元・訂正）は必ず記載。
+- worklog：provenance に関わる訂正（field の復元・訂正）、手順からの逸脱（fresh chat でない実行、開始・終了時刻の未記録）、commit message の訂正は必ず記載。
 - `data/sweeps/`（観測表）と `data/census/`（母集団差分）：公開データのみ。第三者ページの取得ファイル本体はローカル archive（sha256 付き）。
 
 ## 10. 実装
@@ -87,7 +90,8 @@ Ops の手順：
 - `sweep.py`：読み取りのみ、進捗表示、lane ごとの checkpoint 保存、token は環境変数。NVD API は API key 無しで slug ごとに 6 秒間隔（全件で約 7 分）。
 - 週次 scan は同じ script の `--weekly`（feed 由来のみ）。
 - 初回は dry run（観測件数のみ、書き込みなし）で observations.csv と候補表の書式を Engine と確定してから本番。
+- 既知の修正事項（2026-09-22 dry run）：NVD API の `keywordExactMatch=` パラメータで 404（全件）、GHSA の pagination と cvss 取得、AI 関連フィルタ、T5 の前回値比較。NVD は API key を環境変数で任意指定。
 
 ---
 
-*Operations 文書。QA Protocol v1.1 FULL 適用済み（2026-09-22、CLEARED）。*
+*Operations 文書。QA Protocol v1.1 FULL 適用済み（v1.1: 2026-09-22、v1.2: 2026-10-13、CLEARED）。*
