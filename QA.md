@@ -28,7 +28,8 @@ If any item produces a Critical issue, revise the draft and re-run the full revi
 - VERDICT Record summary score equals Scorecard total.
 - Rating (Low/Mid/High) matches the threshold table (70%+ High, 40–69% Mid, 0–39% Low).
 - CISA KEV entries appear in Scorecard, Incident Timeline, Executive Summary, and Contextual Analysis.
-- Japanese summary scores match English report scores exactly.
+- Japanese summary scores match English report scores exactly. The check is made on the operator copy (the delivered `verdict_NNN_<slug>.md`, which carries both blocks); the Japanese summary is not committed to `evaluations/` (EvalFileScope-001).
+- Disclosure tags and paragraphs agree (Trigger2-ParentLevel-001): `shared-investor` is present if and only if a Trigger 2 paragraph is present; `commercial-channel` if and only if a Trigger 3 paragraph is present; `evaluator-identity` if and only if the evaluator-identity paragraph is present; `evaluator-coi` accompanies each of them. A parent-level Trigger 2 paragraph states its level above the evaluated platform.
 - Update evaluations: `previous_score` equals the score of the superseded record; every carried-forward dimension lists its checked sources and check date; an Evaluation History table is present; `evaluated_at` equals the original Layer 0 date.
 - `selection_basis` (evaluations #070 onward): present; a `list:` value names an adopted list edition of the Population Definition in force; no placeholder value.
 
@@ -36,9 +37,10 @@ If any item produces a Critical issue, revise the draft and re-run the full revi
 - Web-search-confirmed claims: treat as verified.
 - Knowledge-based claims below 95% confidence: flag `[UNVERIFIED]` in output and state the resolving source.
 - Never present unverifiable claims as verified.
+- The evaluation ran in a fresh chat (Type D session, stateless): nothing precedes the framework documents and the evaluation prompt in the conversation — no earlier evaluation, draft or score.
 
 ### Severity
-- **Critical:** Wrong CVE, wrong score, wrong ownership, fabricated source, score mismatch between sections, English / Japanese mismatch, `KNOWN_FACTS.md` violation.
+- **Critical:** Wrong CVE, wrong score, wrong ownership, fabricated source, score mismatch between sections, English / Japanese mismatch, `KNOWN_FACTS.md` violation, disclosure tag without its paragraph or paragraph without its tag.
 - **Warning:** Outdated info without caveat, minor numerical discrepancy, Rating label mismatch, unverified claim without flag.
 - **Note:** Capitalization error, non-material date imprecision.
 

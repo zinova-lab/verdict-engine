@@ -46,7 +46,7 @@ A published evaluation is updated through two lanes. Both produce a Differential
 | T5 | A change of terms of service, privacy policy, operator, or ownership (acquisition, entity change, rename) is publicly confirmed. | Next quarterly sweep | V, D; `independence` / `parent_entity` re-assessed; `KNOWN_FACTS.md` entry when a published fact has become incorrect |
 | T6 | A minor-version change of this framework (Absolute Rule 9). | Next routine review | All dimensions |
 
-**Routine lane.** Every evaluation is re-reviewed 365 days after its base date (`updated_at` if present, otherwise `evaluated_at`). Routine scope: R, T, V re-evaluated; D, I, C carried forward only under the carry-forward conditions in Differential Evaluation. The 365-day interval is provisional pending ReviewCadence-002; the pipeline constant follows that ratification.
+**Routine lane.** Every evaluation is re-reviewed 365 days after its base date (`updated_at` if present, otherwise `evaluated_at`). Routine scope: R, T, V re-evaluated; D, I, C carried forward only under the carry-forward conditions in Differential Evaluation. The 365-day interval is set by ReviewCadence-002; the pipeline constant follows that ratification.
 
 **Score-change rule.** If an R-only re-check moves the total by 3 points or more, the update is escalated to a full re-review (all six dimensions re-evaluated, no carry-forward) before publication.
 
@@ -127,6 +127,9 @@ A VERDICT evaluation triggers **Anthropic-investor disclosure** when one or more
 **Trigger 2 — Compound cap-table**: A material Anthropic equity-holder is itself a material investor in the evaluated platform.
 - Example: a model-provider with NVIDIA on its cap-table. NVIDIA also holds equity in Anthropic. Trigger 2 fires.
 
+**Chain-of-control note (Trigger2-ParentLevel-001, 2026-09-25):** For Trigger 2 purposes, the evaluated platform includes every entity in its chain of control. Starting from `parent_entity`, the chain follows publicly confirmed controlling ownership (acquisition, majority or wholly-owned) up to the ultimate parent — the first entity with no controlling owner. Minority holdings are not followed: the chain does not look through an investor into that investor's own investors. The material-investor definition below applies unchanged at each entity in the chain, with no additional threshold and no attenuation by ownership percentage. An investing vehicle is attributed to its controlling entity (for example GV as Alphabet/Google, GitHub Fund and M12 as Microsoft, Alexa Fund as Amazon, NVentures as NVIDIA). Only publicly recorded holdings count; a holding is treated as current unless divestment is publicly recorded, and the disclosure paragraph carries as-of dates. Where a parent's cap table is not public, the record is silent; it does not state that no shared investor exists.
+- Example: a platform acquired by a company whose funding round was led by GV. Google holds equity in Anthropic. Trigger 2 fires one level above the evaluated platform.
+
 **Trigger 3 — Non-arms-length channel**: The evaluated platform's commercial structure includes a non-arms-length relationship with a material Anthropic equity-holder beyond standard supplier-customer relations (exclusive distribution, joint venture, white-label OEM, co-marketing with revenue share, etc.).
 - Example hypothetical: a platform sold exclusively through Amazon Marketplace with revenue share. Trigger 3 fires for Amazon.
 
@@ -159,6 +162,34 @@ The asymmetric threshold (USD 1 billion on the Anthropic side, USD 100 million o
 
 When any trigger fires, the evaluation prompt's Special Considerations section includes explicit disclosure of the triggered structure. The disclosure separates corporate-level commercial and equity relationships (Trigger 1, 2, or 3) from product-level integration choices (e.g., Claude as one of N LLM provider options), in distinct paragraphs.
 
+Structured tags. A record in which a trigger fires carries `evaluator-coi` plus the tag for each trigger that fired:
+
+| Trigger | Tags |
+|---------|------|
+| Trigger 0 | `evaluator-coi` + `evaluator-identity` (and the Trigger 2 tags, which always co-fire) |
+| Trigger 1 | `evaluator-coi` + `direct-investment` (ratified PatchReview-EB-2026-10-07) |
+| Trigger 2 | `evaluator-coi` + `shared-investor` — the same pair for a direct and a parent-level relationship; the level is stated in the paragraph, not in a tag |
+| Trigger 3 | `evaluator-coi` + `commercial-channel` |
+
+A record in which no trigger fires carries none of `direct-investment`, `shared-investor`, `commercial-channel` or `evaluator-identity`.
+
+Parent-level Trigger 2 paragraph (Trigger2-ParentLevel-001). When Trigger 2 fires through the chain of control, the Bias Disclosure carries a paragraph with the elements below. The wording is not fixed verbatim; the elements are required.
+
+1. Opening: "VERDICT additionally discloses a shared-investor relationship at the parent-entity level (Trigger 2)."
+2. The ownership link: parent, evaluated platform, acquisition or ownership date, source.
+3. The investor relationship at the parent: investor, vehicle and its controlling entity, round and date, the qualifying criterion (lead / strategic / USD 100 million or greater / board seat), source.
+4. A cross-reference to the material set in `KNOWN_FACTS.md`.
+5. The level: "N level(s) above the evaluated platform in its chain of control."
+6. The closing sentence shared with every Trigger 2 paragraph: "Identical evaluation criteria were applied regardless of this relationship."
+7. Product-level integration (for example Claude as one of N providers) in a separate paragraph, per the distinct-paragraphs rule above.
+8. Optional, one sentence: a material-set member that appears on the public record below the material-investor threshold.
+
+Reference draft:
+
+> "VERDICT additionally discloses a shared-investor relationship at the parent-entity level (Trigger 2). [Parent] announced its acquisition of [Platform] on [date] ([source]). [Vehicle] ([controlling entity]) [led / holds USD 100 million or more in / holds a board seat at] [Parent] ([round, date]; [source]), and [controlling entity] is a material Anthropic equity-holder as recorded in KNOWN_FACTS.md. The relationship sits [N] level(s) above the evaluated platform in its chain of control. Identical evaluation criteria were applied regardless of this relationship."
+
+Unresolved applicability (Trigger2-ParentLevel-001). When it is unresolved whether a trigger applies, the engine discloses: it writes the paragraph, applies the tags, and states "Strategy notification required" in the record. Operations may deploy the record in that state. Removing a published disclosure requires Strategy ratification.
+
 When Trigger 0 fires, the following additional rules apply:
 
 - The Bias Disclosure carries the evaluator-identity paragraph (verbatim text below) immediately after the mandatory paragraph, and the record carries the structured tags `evaluator-coi` and `evaluator-identity` in addition to the Trigger 2 tags.
@@ -175,6 +206,8 @@ The disclosure does not change scoring methodology. VERDICT scoring remains base
 ### Forward-only application
 
 Framework v1.1 applies to evaluations numbered #066 and forward. Evaluations #060–#065 remain valid under framework v1.0 as published, consistent with the principle that framework precision evolves and prior valid work is not retroactively rewritten.
+
+A differential evaluation applies the disclosure layer of the framework version under which it is produced, and records that version in `framework_version` (Trigger2-ParentLevel-001). An evaluation numbered below #066 therefore carries the current disclosure layer once it has been updated.
 
 ### Future framework evolution
 
@@ -376,6 +409,8 @@ Structure:
 
 ### Block 2 — Japanese Summary (`japanese-summary` code block)
 
+Operator deliverable; not committed to `evaluations/`.
+
 ```
 # [プラットフォーム名] 評価結果サマリー
 
@@ -425,9 +460,10 @@ Every report passes through the QA protocol in `QA.md` before delivery. Maximum 
 
 ## Framework Changelog
 
-- **v0.3.2** — Layer C rewritten: interrupt lane triggers T1–T6, routine review at 365 days (provisional pending ReviewCadence-002), dormancy (frozen) state with `dormant_since`; Differential Evaluation procedure with carry-forward conditions and field semantics; Absolute Rule 9 minor/patch distinction; Trigger 0 (evaluator identity) added to the disclosure layer. Scoring dimensions, criteria, thresholds and tier bands are unchanged from v0.3.1, so scores remain comparable across versions. Evaluations published under v0.3.1 keep their recorded `framework_version`; the published spelling `v0.3.1-final` is an alias of v0.3.1. The disclosure layer's own version labels (v1.0, v1.1) are historical; from v0.3.2 the disclosure layer is versioned with the framework.
+- **v0.3.2** — Layer C rewritten: interrupt lane triggers T1–T6, routine review at 365 days, dormancy (frozen) state with `dormant_since`; Differential Evaluation procedure with carry-forward conditions and field semantics; Absolute Rule 9 minor/patch distinction; Trigger 0 (evaluator identity) added to the disclosure layer. Scoring dimensions, criteria, thresholds and tier bands are unchanged from v0.3.1, so scores remain comparable across versions. Evaluations published under v0.3.1 keep their recorded `framework_version`; the published spelling `v0.3.1-final` is an alias of v0.3.1. The disclosure layer's own version labels (v1.0, v1.1) are historical; from v0.3.2 the disclosure layer is versioned with the framework.
   - 2026-09-22 clarification (Attribution-CVE-001): product-scoped attribution of CVE/KEV records; dependency CVEs and CVE-less advisories. No version change.
   - 2026-09-25 clarifications: Attribution-CVE-002 (window entry by first public disclosure date; retroactive CVEs excluded from the count and maximum; score-source order and vector-computed score), Criterion-VSource-001 (meaning of "Full OSS" vs "Core components only" for V source code disclosure; codifies #059, #060, #064–#068), Trigger2-Designation-001 (lead/strategic designation read from the statements of the parties to the round). No version change; scoring criteria, thresholds and tier bands unchanged.
+  - 2026-10-07 clarifications. Ratification IDs: Trigger2-ParentLevel-001, ReviewCadence-002, EvalFileScope-001. Trigger2-ParentLevel-001: Trigger 2 applies through the chain of control up to the ultimate parent, controlling links only, materiality unchanged; tag sets per trigger; parent-level paragraph elements; a differential applies the disclosure layer in force; disclose by default when applicability is unresolved. ReviewCadence-002: the 365-day routine interval is no longer provisional. EvalFileScope-001: Block 2 is an operator deliverable, not committed to `evaluations/`. No version change; scoring criteria, thresholds and tier bands unchanged.
 - **v0.3.1** — Baseline published framework (2026-03-29).
 
 ---

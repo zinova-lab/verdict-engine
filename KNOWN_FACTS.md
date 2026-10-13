@@ -68,11 +68,25 @@ This document accumulates facts that have been incorrectly stated in past evalua
 - **Approved language:** "n8n, operated by n8n GmbH (Berlin, HRB 212509 B); fair-code under the Sustainable Use License, with n8n Enterprise License (.ee.) files; independent; NVIDIA, through NVentures, participated in the October 2025 Series C (Trigger 2 disclosed)."
 - **Root cause:** The #001 record (migrated capture, 2026-03-24) carried category "Open Source", CVSS 10.0 for CVE-2026-21877 and a count of "12+" (lower_bound). Corrected by the 2026-09-25 update (framework v0.3.2; KnownFacts-n8n-001).
 
+### Guardrails AI / Guardrails AI, Inc. (Harvey)
+
+- **Operator:** Guardrails AI, Inc., San Francisco, United States (Delaware corporation, as recorded in the #064 evaluation).
+  Source: https://www.harvey.ai/blog/guardrails-ai-joins-harvey ; #064 record, V dimension.
+- **Status:** Subsidiary of Harvey AI Corporation; acquisition announced 2026-09-09, terms not disclosed. Harvey has no publicly recorded controlling owner, so the chain of control ends at Harvey. Harvey is not a material Anthropic equity-holder (Trigger 1 does not fire). GV (Google Ventures; attributed to Alphabet/Google) led Harvey's USD 100M Series C, announced 2024-07-23 — ENGINE.md Trigger 2 fires for Google one level above the evaluated platform (Trigger2-ParentLevel-001).
+  Sources: https://www.harvey.ai/blog/guardrails-ai-joins-harvey ; https://www.harvey.ai/blog/harvey-raises-series-c ; counsel announcement https://www.lw.com/en/news/2026/09/latham-advises-harvey-on-acquisition-of-guardrails
+- **Team / corporate context:** Guardrails AI's own investors, as named in Harvey's announcement: Zetta Venture Partners, Bloomberg Beta, Pear VC, Factory and Microsoft. Microsoft's participation was through GitHub Fund in the USD 7.5M seed round led by Zetta Venture Partners (reported 2024-02-15); on the public record it carries no lead or strategic designation, no board seat and no USD 100M position, so it is below the material-investor threshold. Harvey's USD 550M round of 2026-09-09 was co-led by Diffusion and Lightspeed Venture Partners; neither is in the material Anthropic equity-holder set.
+  Sources: https://www.geekwire.com/2024/guardrails-ai-a-startup-co-founded-by-seattle-tech-vet-diego-oppenheimer-raises-7-5m/ (secondary) ; https://www.harvey.ai/blog/harvey-raises-dollar550m-at-a-dollar155b-valuation-to-help-legal-teams-own-their-intelligence
+- **Do NOT state:** `independence: independent` or "independent startup" for Guardrails AI after 2026-09-09; that Harvey is a material Anthropic equity-holder; that Microsoft or GitHub Fund is a material investor in Guardrails AI; that no shared-investor relationship exists; that Lightspeed is a shared investor under Trigger 2 (it is not in the material set).
+- **Approved language:** "Guardrails AI, operated by Guardrails AI, Inc., a Harvey subsidiary since September 2026; GV (Alphabet/Google) led Harvey's 2024 Series C (Trigger 2 disclosed at the parent-entity level, one level above the evaluated platform)."
+- **Root cause:** The #064 initial record (2026-05-12) carried `independence: independent`, which stopped being correct when the acquisition was announced (T5). Corrected by the 2026-09-25 update (framework v0.3.2), which also carried the first parent-level Trigger 2 disclosure; Strategy ruled on its applicability in Trigger2-ParentLevel-001 and the published record stands unedited. That record merges the product-level sentence into the Trigger 2 paragraph; it is aligned to the ENGINE.md paragraph elements at the next differential (KnownFacts-Guardrails-001).
+
 ## Anthropic Equity-Holder Records (Framework v1.1 Reference)
 
 These facts establish the **material Anthropic equity-holders set** referenced in ENGINE.md framework v1.1 materiality framework. Inclusion criterion: publicly-disclosed equity commitment of USD 1 billion or greater (whether closed or subject to closing conditions). The set is used by framework v1.1 Triggers 1 and 2 to determine when Special Considerations disclosure is required.
 
 The set as of 2025-11-18 contains four members: Amazon, Google, Microsoft, NVIDIA. Future additions require Strategy ratification before incorporation into evaluations.
+
+The member facts below were re-checked against primary sources on 2026-10-07; the "Update" lines record what has changed since each entry was written. Membership is unchanged. A re-audit of the set against Anthropic's 2026 funding rounds is pending Strategy ratification.
 
 ### NVIDIA — strategic equity commitment in Anthropic
 
@@ -88,6 +102,9 @@ The set as of 2025-11-18 contains four members: Amazon, Google, Microsoft, NVIDI
 
 **Related commitments**: NVIDIA and Anthropic announced concurrent technology partnership including Anthropic's adoption of NVIDIA architecture and joint optimization of NVIDIA architectures for Anthropic workloads.
 
+**Update (verified 2026-10-07)**: Anthropic's Series G announcement (2026-02-12) states that the round "includes a portion of the previously announced investments from Microsoft and NVIDIA" — a partial closing of the 2025-11-18 commitment. The amount closed is not public. Anthropic's Series H announcement (2026-05-28) does not name NVIDIA as an investor in that round. Do not state a closed amount, and do not state that the USD 10 billion commitment has closed in full.
+Source: https://www.anthropic.com/news/anthropic-raises-30-billion-series-g-funding-380-billion-post-money-valuation
+
 ### Microsoft — strategic equity commitment in Anthropic
 
 **Fact**: Microsoft committed to invest up to USD 5 billion in Anthropic as part of the same 2025-11-18 strategic partnership announcement.
@@ -102,6 +119,9 @@ The set as of 2025-11-18 contains four members: Amazon, Google, Microsoft, NVIDI
 
 **Related commitments**: Anthropic committed to purchase USD 30 billion of Azure compute capacity, with contracted additional compute capacity up to 1 gigawatt. Anthropic's Claude models become available on Microsoft Azure, making Claude the only frontier model available across all three major cloud platforms (AWS, Google Cloud, Azure).
 
+**Update (verified 2026-10-07)**: Anthropic's Series G announcement (2026-02-12) states that the round "includes a portion of the previously announced investments from Microsoft and NVIDIA" — a partial closing of the 2025-11-18 commitment. The amount closed is not public. Anthropic's Series H announcement (2026-05-28) does not name Microsoft as an investor in that round. Do not state a closed amount, and do not state that the USD 5 billion commitment has closed in full.
+Source: https://www.anthropic.com/news/anthropic-raises-30-billion-series-g-funding-380-billion-post-money-valuation
+
 ### Amazon — strategic equity position in Anthropic
 
 **Fact**: Amazon holds a strategic equity position in Anthropic, with publicly-disclosed investment totaling USD 8 billion across multiple commitments (initial USD 4 billion announced 2023-09 and expanded USD 4 billion announced 2024-03 and subsequent rounds).
@@ -111,6 +131,14 @@ The set as of 2025-11-18 contains four members: Amazon, Google, Microsoft, NVIDI
 **Source URL**: https://www.aboutamazon.com/news/company-news/amazon-anthropic-ai-investment
 
 **Related commitments**: Anthropic uses AWS as primary cloud provider; Anthropic adopted AWS Trainium and Inferentia chips for training and inference. AWS Bedrock provides managed access to Claude models.
+
+**Update (verified 2026-10-07)**: Two later disclosures, listed separately and not summed:
+- 2026-04-20 — Amazon: "Amazon will invest $5 billion in Anthropic today and up to an additional $20 billion in the future tied to certain commercial milestones. This is in addition to the $8 billion Amazon previously invested in Anthropic."
+  Sources: https://www.aboutamazon.com/news/company-news/amazon-invests-additional-5-billion-anthropic-ai ; https://www.anthropic.com/news/anthropic-amazon-compute
+- 2026-05-28 — Anthropic, Series H: the round "includes $15 billion of previously committed investments from hyperscalers, including $5 billion from Amazon."
+  Source: https://www.anthropic.com/news/series-h
+
+The announcements do not say whether the USD 5 billion in Series H is the USD 5 billion of 2026-04-20 or a first drawing on the USD 20 billion contingent amount. Do not add the two figures together, and do not state a cumulative Amazon total above the USD 8 billion plus USD 5 billion that Amazon itself has stated.
 
 ### Google — strategic equity position in Anthropic
 
@@ -122,6 +150,9 @@ The set as of 2025-11-18 contains four members: Amazon, Google, Microsoft, NVIDI
 
 **Related commitments**: Anthropic uses Google Cloud as a strategic cloud provider; Claude models are available on Google Cloud Vertex AI.
 
+**Update (verified 2026-10-07)**: Bloomberg reported on 2026-04-24, and Axios confirmed, that Google is committing USD 10 billion in cash at a USD 350 billion valuation, with up to USD 30 billion more contingent on performance targets. CNBC reported the same day that "the companies confirmed" the investment. No published statement of these figures by Anthropic or Alphabet was located as of 2026-10-07; Anthropic's own post on the Google and Broadcom compute expansion does not give an equity figure. Cite the figures as reported by the named outlets, not as disclosed by either party. Google's membership of the set does not depend on them.
+Sources: https://www.bloomberg.com/news/articles/2026-04-24/google-plans-to-invest-up-to-40-billion-in-anthropic ; https://www.axios.com/2026/04/24/google-amazon-anthropic-investment ; https://www.cnbc.com/2026/04/24/google-to-invest-up-to-40-billion-in-anthropic-as-search-giant-spreads-its-ai-bets.html ; https://www.anthropic.com/news/google-broadcom-partnership-compute
+
 ### Anthropic valuation context (as of 2025-11-18)
 
 **Fact**: Following the NVIDIA and Microsoft equity commitments announced 2025-11-18, Anthropic's valuation was reported in the range of USD 350 billion, approximately double its valuation in the September 2025 funding round.
@@ -132,9 +163,20 @@ The set as of 2025-11-18 contains four members: Amazon, Google, Microsoft, NVIDI
 
 **Note**: Valuation figures are reported, not formally disclosed in SEC filings (Anthropic is privately held). The figure is included as a contextual reference for the materiality framework but is not itself a triggering fact.
 
+**Update (verified 2026-10-07)**: The USD 350 billion figure is superseded. Anthropic announced a USD 30 billion Series G at a USD 380 billion post-money valuation on 2026-02-12, and a USD 65 billion Series H at a USD 965 billion post-money valuation on 2026-05-28. A report that cites a valuation gives the figure with its round and date.
+Sources: https://www.anthropic.com/news/anthropic-raises-30-billion-series-g-funding-380-billion-post-money-valuation ; https://www.anthropic.com/news/series-h
+
+### Not in the set — Lightspeed Venture Partners
+
+**Fact**: Lightspeed led Anthropic's Series E (USD 3.5 billion, 2025-03-03), co-led Series F (USD 13 billion, 2025-09-02) and is listed among the significant investors in Series G and Series H. Neither Anthropic nor Lightspeed has disclosed the amount Lightspeed invested in any round.
+
+**Sources**: https://www.anthropic.com/news/anthropic-raises-series-e-at-usd61-5b-post-money-valuation ; https://lsvp.com/stories/lightspeed-announces-lead-investment-in-anthropics-3-5b-series-e-financing/ ; https://www.anthropic.com/news/anthropic-raises-series-f-at-usd183b-post-money-valuation ; Series G and Series H announcements above.
+
+**Do NOT state**: that Lightspeed invested USD 1 billion in Anthropic — the figure comes from a single secondary report (The Next Platform, 2025-03-04) that cites no source; that Lightspeed is a material Anthropic equity-holder; that Lightspeed is not one. The inclusion criterion is written on publicly-disclosed commitments, and whether Lightspeed meets it is a question for the pending re-audit. Until Strategy ratifies a change, a Lightspeed holding in an evaluated platform or its chain of control fires no trigger and the record is silent on it.
+
 ### Reference for framework v1.1 application
 
-When applying framework v1.1 triggers (see ENGINE.md), evaluators verify whether the evaluated platform's parent entity (Trigger 1) or cap-table investor (Trigger 2) appears in the material Anthropic equity-holders set defined above. The set is canonical as of the date indicated; additions to the set occur only through Strategy ratification.
+When applying framework v1.1 triggers (see ENGINE.md), evaluators verify whether the evaluated platform's parent entity (Trigger 1) or cap-table investor (Trigger 2) appears in the material Anthropic equity-holders set defined above. Under Trigger2-ParentLevel-001 the Trigger 2 check is made at every entity in the evaluated platform's chain of control, with an investing vehicle read as its controlling entity. The set is canonical as of the date indicated; additions to the set occur only through Strategy ratification.
 
 For commercial relationships not falling under Triggers 1, 2, or 3 (e.g., a platform that merely uses NVIDIA GPUs for inference, or is distributed on AWS Marketplace under standard terms), no Anthropic-equity-holder disclosure is required, even if the platform's vendor relationships involve set members. These are explicitly non-triggering relationships per ENGINE.md framework v1.1.
 
