@@ -193,6 +193,8 @@ Each entry uses this structure:
 
 Entries are added when: a published evaluation contains an error requiring correction; a recurring misstatement in public sources is identified; or a vendor response documents a factual correction with supporting evidence.
 
+An operator correction that recurs is a KNOWN_FACTS candidate; a single corrected case stays in that evaluation's Contextual Analysis (ENGINE.md, Evaluation Sequence step 2; PatchReview-EB-Close-2026-10-13).
+
 ## Review cadence
 
 During the factual-accuracy review (see `QA.md`, section 1), the engine cross-checks every entity mentioned in the draft against this document before delivery.
