@@ -7,7 +7,7 @@ Fill in each section. Remove instructional lines (prefixed with `>`) before use.
 ## PLATFORM UNDER EVALUATION
 
 **Name:** [platform name]
-**Owner:** [legal entity + jurisdiction + independence status]
+**Owner:** [legal entity + jurisdiction + independence status — a starting point; the engine confirms the operator of record per ENGINE.md, Evaluation Sequence step 2]
 **Selection basis:** [`list:<list-id>-<edition>` or `interrupt:<CVE/GHSA id>` — copied verbatim into front matter `selection_basis`; evaluations #070 onward]
 **Category:** [e.g., AI Coding Agent / Workflow Automation / Browser Agent]
 **Primary product surfaces:** [list product forms — CLI, web app, SDK, cloud service, self-hosted — and the distribution channel for each]

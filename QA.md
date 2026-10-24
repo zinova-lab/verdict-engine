@@ -13,6 +13,7 @@ If any item produces a Critical issue, revise the draft and re-run the full revi
 - Every CVSS score matches the source (NVD, vendor advisory, CVE record).
 - Every compliance certification (SOC 2, HIPAA, ISO 27001, etc.) is verified against the vendor's official documentation.
 - Every acquisition, funding, or ownership claim matches public records.
+- The operator is the operator of record, cited to the vendor's own legal or company page (ENGINE.md, Evaluation Sequence step 2); where no vendor page names a legal entity, the report says so and infers none (OperatorOfRecord-001).
 - Every CISA KEV reference matches the current KEV catalog.
 - Dates (patch, disclosure, incident) are accurate.
 - Numerical claims are verified against cited sources.

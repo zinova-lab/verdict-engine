@@ -193,7 +193,7 @@ Each entry uses this structure:
 
 Entries are added when: a published evaluation contains an error requiring correction; a recurring misstatement in public sources is identified; or a vendor response documents a factual correction with supporting evidence.
 
-An operator correction that recurs is a KNOWN_FACTS candidate; a single corrected case stays in that evaluation's Contextual Analysis (ENGINE.md, Evaluation Sequence step 2; PatchReview-EB-Close-2026-10-13).
+An operator correction that recurs for the same entity is a KNOWN_FACTS candidate; a single corrected case stays in that evaluation's Contextual Analysis, and a pattern that recurs across entities is governed by ENGINE.md, Evaluation Sequence step 2 (PatchReview-EB-Close-2026-10-13; OperatorOfRecord-001).
 
 ## Review cadence
 

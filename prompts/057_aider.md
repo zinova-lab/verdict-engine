@@ -1,5 +1,7 @@
 # VERDICT Evaluation Prompt #057 — aider
 
+**Note (OperatorOfRecord-001, 2026-10-23):** The Owner line below is superseded. The operator of record is Aider AI LLC, per the published #057 record (Contextual Analysis, Operator note). The prompt is otherwise kept as issued.
+
 **Framework:** v0.3.1
 **Layer:** 0
 
