@@ -1,6 +1,6 @@
 # VERDICT Operations — 四半期 sweep 運用手順
 
-**Version:** 1.2.2（2026-10-24）。v1.2.1 からの差分は §4 step 1 の旧名義確認、§6 step 4 の committer identity gate（CommitterIdentity-Engine-001 (ii)）、§6 step 5 の件数 literal の runtime 化のみ。v1.2.1（2026-10-19）。v1.2 からの差分は §6 step 5 の日付表記注記の訂正と step 4 の heredoc 鎖順・venv 注記のみ。v1.2（2026-10-13）。v1.1（2026-09-22、ReviewCadence-Sweep-001 の条件 (a)〜(g) と追加事項 A／B／C）に、ReviewCadence-002（routine 365 日確定）、EvalFileScope-001／-ext／-ext-2（公開ファイルは Block 1 のみ）、Trigger2-ParentLevel-001（親会社レベルの T5 照合）、PatchReview-EB-2026-10-07（operator copy の置き場）と pilot Sprint-001 の教訓を反映。
+**Version:** 1.2.3（2026-10-27）。v1.2.2 からの差分は SweepFormat-001（Engine、2026-10-27）の反映のみ：§5 観測表の列（`basis` 追加、`recorded_value` のキー名を schema field 名に統一）と公開層の定義（keyword 一致行は非公開作業層）、§4 step 7 の凍結 record 除外。v1.2.2（2026-10-24）。v1.2.1 からの差分は §4 step 1 の旧名義確認、§6 step 4 の committer identity gate（CommitterIdentity-Engine-001 (ii)）、§6 step 5 の件数 literal の runtime 化のみ。v1.2.1（2026-10-19）。v1.2 からの差分は §6 step 5 の日付表記注記の訂正と step 4 の heredoc 鎖順・venv 注記のみ。v1.2（2026-10-13）。v1.1（2026-09-22、ReviewCadence-Sweep-001 の条件 (a)〜(g) と追加事項 A／B／C）に、ReviewCadence-002（routine 365 日確定）、EvalFileScope-001／-ext／-ext-2（公開ファイルは Block 1 のみ）、Trigger2-ParentLevel-001（親会社レベルの T5 照合）、PatchReview-EB-2026-10-07（operator copy の置き場）と pilot Sprint-001 の教訓を反映。
 **根拠:** ENGINE.md v0.3.2（verdict-engine `9f64418`）Layer C「sweep の手順は operations documents で定義する」。StrategyApproval-001、ReviewCadence-001、ReviewCadence-Sweep-001、ReviewCadence-002、EvalFileScope-001／-ext／-ext-2、Trigger2-ParentLevel-001、PatchReview-EB-2026-10-07。
 **適用範囲:** 公開済み評価の更新入口（interrupt lane／routine lane／dormancy）と、母集団の四半期差分。差分評価の作成は Engine の作業で、本書は Operations の手順のみを定める。
 **置き場:** `verdict-engine/docs/operations_sweep_procedure.md`（ReviewCadence-Sweep-001 承認）。
@@ -39,12 +39,16 @@
 4. **T3／T4 候補出し。** 供給網侵害・重大インシデントは公開報道の 2 独立ソース要件があるため、機械照合はキーワード検索の候補出しまで。候補表（非公開）で Engine に渡す。判定は Engine。
 5. **T5 照合。** 各件の privacy policy／ToS／会社情報ページの last-updated 表示を取得し、前回 sweep 以降の変更を観測表に出す。所有者変更・改名は公開発表の URL を添える。**親会社レベル（Trigger2-ParentLevel-001）：** `parent_entity` を持つ件は、支配連鎖の各社（最終親会社まで）の資金調達発表を取得し、material set 構成員の lead／co-lead／strategic 指定の有無を観測表に出す（lane = T5、`observed_value` は発表 URL と当事者の指定語）。Trigger 2 の発火判定と開示文は Engine。
 6. **休眠判定。** repo が評価対象の件は `pushed_at`・最新 release 日、hosted 製品は製品の changelog／release ページの最終更新日を観測。12 か月無活動を観測表に出す（Layer C：hosted 製品は repo 停滞だけでは非該当）。既に `dormant_since` を持つ件は活動再開の有無を観測。
-7. **routine 期日。** base ＋ 365 日（ReviewCadence-002）が次の sweep までに到来する件を抽出。
+7. **routine 期日。** base ＋ 365 日（ReviewCadence-002）が次の sweep までに到来する件を抽出。The routine-due lane excludes records carrying `dormant_since`; the interrupt lanes remain in scope for frozen records.
 8. **sweep report。** §5 の 2 層で出力し、`#daily-log` に要約を記録、Engine に渡す。
 
 ## 5. sweep report の 2 層
 
-**観測表（公開、`data/sweeps/<YYYY-MM-DD>/observations.csv`）**：一次 feed／API から機械的に導ける行のみ。列は `slug / source_url / observed_value / observed_date / recorded_value / lane`（lane = T1 / T2 / T5 / routine / dormancy）。判定語（「候補」「該当」）は書かない。冒頭に「機械照合の観測値。判定は差分評価として公開する」を明記。
+**観測表（公開、`data/sweeps/<YYYY-MM-DD>/observations.csv`）**：一次 feed／API から機械的に導ける行のみ。列は `lane / basis / slug / source_url / observed_value / observed_date / recorded_value`（SweepFormat-001）。判定語（「候補」「該当」）は書かない。冒頭に「機械照合の観測値。判定は差分評価として公開する」を明記。
+
+Observation rows carry: lane, basis, slug, source_url, observed_value, observed_date, recorded_value. lane is the ENGINE.md trigger id (T1, T2, T5) or the Layer C state lane (dormancy, routine, population). basis names the evidence class: kev-catalog, repo-ghsa, nvd-keyword, page-date, repo-activity. recorded_value uses the canonical schema field names verbatim (`cve_count_12mo`, `max_cvss_12mo`, `cisa_kev.present`, `dormant_since`, `evaluated_at`, `updated_at`).
+
+Published rows carry product-scoped evidence only; keyword-match candidates (basis = nvd-keyword) are triaged in a non-published working layer (`observations_working.csv`, all rows retained) until a product-scoped match exists — CPE match, vendor advisory or a GHSA record — at which point the row is promoted to the published table with its source_url replaced by the product-scoped source. The published table states this rule in its header note.
 
 **候補表（非公開、Engine へ直接）**：T3／T4 のキーワード検索候補、および観測表から Ops が読み取った引き渡し順。`mandatory scope` は Layer C の表どおり（T1: R、T2: R＋KEV protocol、T3／T4: R,T、T5: V,D＋independence／parent_entity、T6: 全次元、routine: R,T,V）。
 
