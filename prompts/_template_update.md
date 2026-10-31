@@ -57,6 +57,8 @@ Use for every Layer C update: routine review (365-day lane) or interrupt lane (T
 - Homepage / documentation / privacy policy / security page / terms / DPA / sub-processors:
 ### Security and vulnerability disclosure
 - GitHub Security Advisories: · NVD search terms: · OSV: · CISA KEV catalog: · vendor advisories / postmortems:
+- Vendor-published security or incident bulletins (search each, record the URL or "none located"): homepage blog (/blog), /security, /trust, status page, changelog or release notes carrying security notices. These are the primary evidence for T "Incident disclosure speed" and for the disclosure date of any incident (SourceCoverage-001).
+- Pages the session tools cannot read (client-rendered trust centers, access walls): say so in the report rather than scoring silence; the operator supplies the rendered text with its retrieval date, and the Differential section records the operator input and that date (OperatorInput-001).
 ### Ownership and identity
 - [operator, parent entity, acquisition records — for V and `independence`]
 ### Release and activity record (dormancy test)
