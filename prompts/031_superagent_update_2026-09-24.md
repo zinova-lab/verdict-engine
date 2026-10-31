@@ -1,5 +1,7 @@
 # VERDICT Update Evaluation Prompt — #031 Superagent (update, 2026-09-24)
 
+**Note (Batch1-TrancheA-Authorize-2026-10-31-A1, 2026-10-31):** This prompt is superseded by `prompts/031_superagent_update_2026-10-31.md`, drafted on `_template_update.md` against the 2026-10-27 sweep observations and the record base `verdict-platforms` e9a717f. It was never executed; its trigger basis (2026-09-22 dry run, record base 942d628) is stale. Kept as issued for the audit trail.
+
 Framework v0.3.2 Differential Evaluation. Interrupt lane (T1, CVE-less advisory) with folded routine scope. Fourth in the LayerC-Triage-001 order. Drafted from the 2026-09-22 sweep dry run, which observed one High published advisory for `superagent-ai/superagent` inside the trailing 12 months while the record carries `cve_count_12mo: 0`.
 
 ---
