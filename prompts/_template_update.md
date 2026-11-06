@@ -75,7 +75,9 @@ Use for every Layer C update: routine review (365-day lane) or interrupt lane (T
 - `supply_chain_compromise_12mo`: set true only on public confirmation that an unauthorized write occurred to the vendor's own package, account, build pipeline or distribution endpoint (SupplyChain-Criterion-001 / -001a); cite the confirming source. A vulnerability that would permit such a write is scored under R's CVE criteria and recorded as "vulnerability only; no publicly confirmed write (SupplyChain-Criterion-001a)".
 - Counted CVE IDs whose CVE List record is not published carry "CVE List record: RESERVED as of YYYY-MM-DD; counted on CNA-advisory basis (Convention-CVEReserved-001)".
 - `independence` assessed (`unrecorded` not permitted); `qa` full protocol (`unresolved` not permitted).
-- `next_review_due` is recomputed by the pipeline; do not author it.
+- Pipeline-owned fields are kept as lines, never deleted: write `rank:` with the base record's value, `next_review_due: null`, and `github:` with the base record's value (or the value the operator supplies). Operations fills `next_review_due` and the pipeline writes back `rank`; a missing line halts the write-back.
+- `display_tags[].color` and the card tag colors take only the schema enum `safe` | `amber` | `red` | `dim` | `warn`; no other color names.
+- `qa.revision_cycles` is the `n` of the QA block's Result line (`REVISION n/2` → `n`; `CLEARED` on the first pass → `0`). A fix made before the first QA pass is not a cycle; a re-emission requested by the operator (header pin, fence, note length) is not a cycle. The block and the field must agree.
 - `verdict.<dim>.note`: at most 80 characters per dimension (one clause per fact, semicolon-separated); evidence and URLs belong in the report body, not the note.
 - `dormant_since`: author only while the record is in frozen state (ENGINE.md, Layer C dormancy). A non-dormant record omits the key entirely; do not write `dormant_since: null`. When frozen state ends, remove the key.
 - If the R-only change moves the total by ≥3 points, escalate to a full re-review (all six dimensions) before publication. If the total moves by ≥5 points, the Executive Summary names the dimensions and evidence that moved it.
@@ -99,7 +101,7 @@ Use for every Layer C update: routine review (365-day lane) or interrupt lane (T
 
 ## OUTPUT RULES
 
-1. Full English report in a markdown code block (ENGINE.md Output Format), header `Evaluation type: Update`, plus:
+1. Full English report in a markdown code block (ENGINE.md Output Format), header `Evaluation type: Update`; the header's Framework line carries the verdict-engine commit hash given in the invocation message, copied verbatim (never a hash recalled from memory or read from another document), plus:
    - a **Differential** section: previous evaluation date and score; each dimension's state; carry-forward checks performed (date, URLs) or the reason none were possible; prior-record omissions found (e.g. a CVE inside the prior window that the prior record did not carry), stated as facts;
    - an **Evaluation History** table (date, type, score, tier, framework version) covering every evaluation in the series.
 2. Japanese summary in a `japanese-summary` code block, with `評価種別: 更新` and 前回スコア.
