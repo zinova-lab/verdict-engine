@@ -33,6 +33,8 @@ If any item produces a Critical issue, revise the draft and re-run the full revi
 - Disclosure tags and paragraphs agree (Trigger2-ParentLevel-001): `shared-investor` is present if and only if a Trigger 2 paragraph is present; `commercial-channel` if and only if a Trigger 3 paragraph is present; `evaluator-identity` if and only if the evaluator-identity paragraph is present; `evaluator-coi` accompanies each of them. A parent-level Trigger 2 paragraph states its level above the evaluated platform.
 - Update evaluations: `previous_score` equals the score of the superseded record; every carried-forward dimension lists its checked sources and check date; an Evaluation History table is present; `evaluated_at` equals the original Layer 0 date.
 - `selection_basis` (evaluations #070 onward): present; a `list:` value names an adopted list edition of the Population Definition in force; no placeholder value.
+- Counted CVE IDs whose CVE List record is not PUBLISHED carry the Convention-CVEReserved-001 note ("CVE List record: RESERVED as of YYYY-MM-DD; counted on CNA-advisory basis"), and every ID carrying that note is counted in `cve_count_12mo`. Severity: Critical (count mismatch) / Warning (note missing on a counted ID).
+- `supply_chain_compromise_12mo: true` is accompanied by a cited public source stating that an unauthorized write took place (SupplyChain-Criterion-001a); a qualifying vulnerability with the field false carries the "vulnerability only; no publicly confirmed write" note. Severity: Critical (true without a confirming source) / Warning (note missing).
 
 ### Verification-capability awareness
 - Web-search-confirmed claims: treat as verified.

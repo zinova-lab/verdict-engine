@@ -57,8 +57,8 @@ Use for every Layer C update: routine review (365-day lane) or interrupt lane (T
 - Homepage / documentation / privacy policy / security page / terms / DPA / sub-processors:
 ### Security and vulnerability disclosure
 - GitHub Security Advisories: · NVD search terms: · OSV: · CISA KEV catalog: · vendor advisories / postmortems:
-- Vendor-published security or incident bulletins (search each, record the URL or "none located"): homepage blog (/blog), /security, /trust, status page, changelog or release notes carrying security notices. These are the primary evidence for T "Incident disclosure speed" and for the disclosure date of any incident (SourceCoverage-001).
-- Pages the session tools cannot read (client-rendered trust centers, access walls): say so in the report rather than scoring silence; the operator supplies the rendered text with its retrieval date, and the Differential section records the operator input and that date (OperatorInput-001).
+- Vendor-published security or incident bulletins (search each, record the URL or "none located"): homepage blog (/blog), /security, /trust, status page, changelog or release notes carrying security notices. These are the primary evidence for T "Incident disclosure speed" and for the disclosure date of any incident (SourceCoverage-001). Fetch directly any trust, security or status URL named in SECURITY.md, the docs or the legal pages; web search is the fallback, not the gate (SourceCoverage-002).
+- Pages the session tools cannot read (client-rendered trust centers, access walls): say so in the report rather than scoring silence; the operator supplies the rendered text with its retrieval date, and the Differential section records the operator input and that date (OperatorInput-001). The same applies to the CISA KEV JSON feed: when unreadable, the catalog's vendor filter and per-CVE trackers serve in-session, and Operations supplies the JSON check (catalogVersion, entry count, per-CVE result) at intake; the Differential records it as operator input.
 ### Ownership and identity
 - [operator, parent entity, acquisition records — for V and `independence`]
 ### Release and activity record (dormancy test)
@@ -72,6 +72,8 @@ Use for every Layer C update: routine review (365-day lane) or interrupt lane (T
 - `evaluated_at` unchanged; `updated_at` = date the differential is completed; `previous_evaluation_date` / `previous_score` = the immediately preceding evaluation.
 - `framework_version: v0.3.2`; `target_version` = the version examined now; `evaluator_model` recorded exactly.
 - `cve_count_12mo` (basis `exact`), `max_cvss_12mo`, `cisa_kev`, `supply_chain_compromise_12mo` recomputed over the new window.
+- `supply_chain_compromise_12mo`: set true only on public confirmation that an unauthorized write occurred to the vendor's own package, account, build pipeline or distribution endpoint (SupplyChain-Criterion-001 / -001a); cite the confirming source. A vulnerability that would permit such a write is scored under R's CVE criteria and recorded as "vulnerability only; no publicly confirmed write (SupplyChain-Criterion-001a)".
+- Counted CVE IDs whose CVE List record is not published carry "CVE List record: RESERVED as of YYYY-MM-DD; counted on CNA-advisory basis (Convention-CVEReserved-001)".
 - `independence` assessed (`unrecorded` not permitted); `qa` full protocol (`unresolved` not permitted).
 - `next_review_due` is recomputed by the pipeline; do not author it.
 - `verdict.<dim>.note`: at most 80 characters per dimension (one clause per fact, semicolon-separated); evidence and URLs belong in the report body, not the note.
@@ -109,6 +111,7 @@ Use for every Layer C update: routine review (365-day lane) or interrupt lane (T
 ## REMINDERS
 
 - Public documentation only (Layer 0). Silence = 0. Carry-forward is a positive finding, never an inference from absence of news.
+- Attribution-CVE-001: product scope bound to `target_version`; CVE-less advisories are not counted; dependency CVEs go to the Incident Timeline with the `dependency: <vendor/product>` marker only; a dependency CVE exploited against deployments is not a supply chain compromise unless the vendor's own package, account or build pipeline was compromised (SupplyChain-Criterion-001 / -001a).
 - Include positive findings alongside risks. No intent attribution. Record elapsed times, not motives.
 - The prior score is published alongside the new one; never suppress or smooth a change.
 
